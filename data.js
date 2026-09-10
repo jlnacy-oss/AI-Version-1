@@ -6,8 +6,8 @@ window.DASH = {
       "Everyday chat / reasoning",
       "ChatGPT or Claude",
       "Gemini",
-      "Never \u2014 this is the assistant job",
-      "\u2014"
+      "Never — this is the assistant job",
+      "—"
     ],
     [
       "Basic / cited web research",
@@ -104,8 +104,8 @@ window.DASH = {
       "Contracts / legal first-pass",
       "Claude",
       "ChatGPT / Copilot",
-      "Never skip counsel \u2014 this is not a law firm",
-      "\u2014"
+      "Never skip counsel — this is not a law firm",
+      "—"
     ],
     [
       "Board / exec deck",
@@ -138,8 +138,8 @@ window.DASH = {
     [
       "L&D talking-head video",
       "Do not use a chatbot",
-      "\u2014",
-      "Always \u2014 avatars are a different product",
+      "—",
+      "Always — avatars are a different product",
       "Synthesia / Colossyan"
     ],
     [
@@ -187,102 +187,116 @@ window.DASH = {
   ],
   "apiPrices": [
     [
-      "GPT-6 Astra",
-      "OpenAI",
-      "10.00",
-      "50.00",
-      "Flagship / computer use"
-    ],
-    [
-      "GPT-5.6 Sol",
-      "OpenAI",
-      "4.00",
-      "20.00",
-      "Promo through 21 Nov 2026"
-    ],
-    [
-      "GPT-5.6 Terra",
-      "OpenAI",
-      "2.00",
-      "12.00",
-      "Workhorse"
-    ],
-    [
-      "GPT-5.6 Luna",
-      "OpenAI",
-      "0.20",
-      "1.20",
-      "High volume"
-    ],
-    [
-      "Claude Fable 5.1",
       "Anthropic",
+      "Claude Fable 5.1",
       "10.00",
       "50.00",
+      "2026-09-01",
       "Cache reads $0.25"
     ],
     [
-      "Claude Opus 5",
       "Anthropic",
+      "Claude Opus 5",
       "5.00",
       "25.00",
+      "2026-07-24",
       "Near-Fable at half price"
     ],
     [
-      "Claude Sonnet 5",
       "Anthropic",
+      "Claude Sonnet 5",
       "2.00",
       "10.00",
+      "2026-06-01",
       "Default Pro / Free"
     ],
     [
-      "Gemini 3.8 Flash",
-      "Google",
-      "0.75",
-      "3.75",
-      "Intro rate; doubles 1 Jan 2027"
-    ],
-    [
-      "Gemini 3.1 Pro",
-      "Google",
-      "2.00",
-      "12.00",
-      "\u2264200K context; 2x above"
-    ],
-    [
-      "Grok 4.6",
-      "xAI",
-      "2.00",
-      "6.00",
-      "Live X / Imagine"
-    ],
-    [
-      "DeepSeek V4 Flash",
       "DeepSeek",
+      "DeepSeek V4 Flash",
       "0.14",
       "0.28",
-      "V4.1 Flash SKU 10 Sep"
+      "2026-09-10",
+      "V4.1 Flash SKU"
     ],
     [
-      "DeepSeek V4 Pro",
       "DeepSeek",
-      "~0.96",
-      "~1.91",
+      "DeepSeek V4 Pro",
+      "0.96",
+      "1.91",
+      "2026-08-13",
       "Peak-hour doubling"
     ],
     [
-      "Mistral Large 3",
+      "Google",
+      "Gemini 3.1 Pro",
+      "2.00",
+      "12.00",
+      "2026-04-01",
+      "≤200K context; 2x above"
+    ],
+    [
+      "Google",
+      "Gemini 3.8 Flash",
+      "0.75",
+      "3.75",
+      "2026-09-02",
+      "Intro rate; doubles 1 Jan 2027"
+    ],
+    [
       "Mistral",
+      "Mistral Large 3",
       "0.50",
       "1.50",
+      "2026-07-01",
       "EU / platform"
     ],
     [
-      "Perplexity Sonar Reasoning Pro",
+      "OpenAI",
+      "GPT-5.6 Luna",
+      "0.20",
+      "1.20",
+      "2026-07-09",
+      "High volume"
+    ],
+    [
+      "OpenAI",
+      "GPT-5.6 Sol",
+      "4.00",
+      "20.00",
+      "2026-07-09",
+      "Promo through 21 Nov 2026"
+    ],
+    [
+      "OpenAI",
+      "GPT-5.6 Terra",
+      "2.00",
+      "12.00",
+      "2026-07-09",
+      "Workhorse"
+    ],
+    [
+      "OpenAI",
+      "GPT-6 Astra",
+      "10.00",
+      "50.00",
+      "2026-09-03",
+      "Flagship / computer use"
+    ],
+    [
       "Perplexity",
+      "Sonar Reasoning Pro",
       "2.00",
       "8.00",
+      "2026-06-01",
       "Cited research API"
+    ],
+    [
+      "xAI",
+      "Grok 4.6",
+      "2.00",
+      "6.00",
+      "2026-08-12",
+      "Live X / Imagine"
     ]
   ],
   "vendors": {
@@ -422,7 +436,7 @@ window.DASH = {
       "adoption": {
         "score": 85,
         "label": "Consumer",
-        "note": "Free inside WhatsApp, Instagram, Facebook \u2014 unmatched consumer distribution."
+        "note": "Free inside WhatsApp, Instagram, Facebook — unmatched consumer distribution."
       },
       "pricingTier": {
         "score": 15,
@@ -510,15 +524,17 @@ window.DASH = {
       "summary": "Next flagship for computer use, coding and professional work. API $10 / $50 per 1M tokens. Rolling out in ChatGPT, Codex, Azure and Bedrock.",
       "date": "2026-09-03",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://openai.com/index/gpt-6-astra/"
     },
     {
       "vendor": "OpenAI",
-      "title": "OpenAI DevDay 2026 \u2014 San Francisco",
+      "title": "OpenAI DevDay 2026 — San Francisco",
       "summary": "Flagship developer event confirmed for 29 September in San Francisco.",
       "date": "2026-09-29",
       "type": "Event",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://devday.openai.com/"
     },
     {
       "vendor": "ChatGPT",
@@ -526,7 +542,8 @@ window.DASH = {
       "summary": "Plus, Pro, Business and Enterprise users now have GPT-6 Astra in chat and Codex. Enterprise enablement is off by default.",
       "date": "2026-09-08",
       "type": "New feature",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://openai.com/index/gpt-6-astra-next-generation-work/"
     },
     {
       "vendor": "ChatGPT",
@@ -534,7 +551,8 @@ window.DASH = {
       "summary": "August product moves push ChatGPT into school and university settings with broader safety-framework updates.",
       "date": "2026-08-19",
       "type": "Governance",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://openai.com/chatgpt/education/"
     },
     {
       "vendor": "ChatGPT",
@@ -542,7 +560,8 @@ window.DASH = {
       "summary": "A release lets ChatGPT for Clinicians query public healthcare datasets from the iOS app.",
       "date": "2026-08-01",
       "type": "New feature",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://openai.com/chatgpt/"
     },
     {
       "vendor": "Claude",
@@ -550,7 +569,8 @@ window.DASH = {
       "summary": "Peak generally-available Claude. Same $10/$50 list as Fable 5; cache reads cut to $0.25. Mythos 5.1 is trusted-access for cyber and life sciences.",
       "date": "2026-09-01",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.anthropic.com/news"
     },
     {
       "vendor": "Claude",
@@ -558,7 +578,8 @@ window.DASH = {
       "summary": "Enterprise Frontier Safeguards store review data in customer-controlled cloud (ZDR-equivalent with misuse detection).",
       "date": "2026-09-01",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://aws.amazon.com/bedrock/"
     },
     {
       "vendor": "Claude",
@@ -566,7 +587,8 @@ window.DASH = {
       "summary": "Claude models available inside Salesforce agentic workflows ahead of Dreamforce.",
       "date": "2026-09-03",
       "type": "Partnership",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.salesforce.com/agentforce/"
     },
     {
       "vendor": "Grok",
@@ -574,23 +596,26 @@ window.DASH = {
       "summary": "xAI continues the Grok 4 line on Colossus. Intelligence index moved up vs 4.5; API about $2 / $6 per 1M.",
       "date": "2026-08-12",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://x.ai"
     },
     {
       "vendor": "Grok",
       "title": "Grok 4.7 targets a September 12 launch",
-      "summary": "Elon Musk has said a larger Grok 4.7 trained with SpaceX data is on track within days as xAI\u2019s bid to beat rival frontier models.",
+      "summary": "Elon Musk has said a larger Grok 4.7 trained with SpaceX data is on track within days as xAI’s bid to beat rival frontier models.",
       "date": "2026-09-12",
       "type": "Model release",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://x.ai"
     },
     {
       "vendor": "Google",
-      "title": "Gemini 3.8 Flash ships as Google\u2019s fastest workhorse",
+      "title": "Gemini 3.8 Flash ships as Google’s fastest workhorse",
       "summary": "GA 2 September. Intro API $0.75 / $3.75 through 31 Dec 2026, then doubles.",
       "date": "2026-09-02",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://ai.google.dev/"
     },
     {
       "vendor": "Google",
@@ -598,15 +623,17 @@ window.DASH = {
       "summary": "Flash family update three weeks before 3.8. Same promotional rate card.",
       "date": "2026-08-13",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://ai.google.dev/"
     },
     {
       "vendor": "Microsoft",
       "title": "Claude Fable 5.1 available in Microsoft Foundry / Copilot model picker",
-      "summary": "Microsoft-standardized estates can route Copilot workloads to Anthropic\u2019s peak model.",
+      "summary": "Microsoft-standardized estates can route Copilot workloads to Anthropic’s peak model.",
       "date": "2026-09-01",
       "type": "Integration",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.microsoft.com/microsoft-365/copilot"
     },
     {
       "vendor": "Microsoft",
@@ -614,7 +641,8 @@ window.DASH = {
       "summary": "Model lifecycle posted on Azure; plan migrations before the dated sunset.",
       "date": "2026-09-02",
       "type": "Release notes",
-      "impact": "announced"
+      "impact": "announced",
+      "url": "https://learn.microsoft.com/azure/ai-foundry/"
     },
     {
       "vendor": "AWS",
@@ -622,7 +650,8 @@ window.DASH = {
       "summary": "Same week as the Anthropic launch. Bedrock AgentCore continues to expand the agent runtime.",
       "date": "2026-09-01",
       "type": "Platform",
-      "impact": "ga"
+      "impact": "now",
+      "url": "https://aws.amazon.com/bedrock/"
     },
     {
       "vendor": "AWS",
@@ -630,15 +659,17 @@ window.DASH = {
       "summary": "Cloud-native agent runtime and tooling for production agents on Bedrock.",
       "date": "2026-09-03",
       "type": "Platform",
-      "impact": "ga"
+      "impact": "now",
+      "url": "https://aws.amazon.com/bedrock/"
     },
     {
       "vendor": "Perplexity",
       "title": "Perplexity adds Gemini 3.8 Flash and GLM-5.3 Flash in the API router",
-      "summary": "New model IDs on Perplexity\u2019s API at Google\u2019s promotional Flash rate and $0.15/$0.50 for GLM Flash.",
+      "summary": "New model IDs on Perplexity’s API at Google’s promotional Flash rate and $0.15/$0.50 for GLM Flash.",
       "date": "2026-09-09",
       "type": "Integration",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.perplexity.ai"
     },
     {
       "vendor": "DeepSeek",
@@ -646,7 +677,8 @@ window.DASH = {
       "summary": "New architecture Flash with native multimodal and 1M context. Legacy Flash aliases route here from 10 Sep.",
       "date": "2026-09-10",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.deepseek.com"
     },
     {
       "vendor": "DeepSeek",
@@ -654,7 +686,8 @@ window.DASH = {
       "summary": "Plan API cutovers off V4 Pro before the dated retirement.",
       "date": "2026-09-10",
       "type": "Release notes",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://api-docs.deepseek.com"
     },
     {
       "vendor": "Meta",
@@ -662,31 +695,35 @@ window.DASH = {
       "summary": "Meta AI Research drop on 2 Sep alongside the Llama / Meta AI consumer surface.",
       "date": "2026-09-02",
       "type": "Model release",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://ai.meta.com"
     },
     {
       "vendor": "Meta",
-      "title": "Meta Connect 2026 \u2014 Menlo Park",
+      "title": "Meta Connect 2026 — Menlo Park",
       "summary": "Annual conference covering Llama, Meta AI and the Reality Labs roadmap.",
       "date": "2026-09-23",
       "type": "Event",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://www.meta.com/connect/"
     },
     {
       "vendor": "NVIDIA",
-      "title": "NVIDIA AI Infra Summit \u2014 Santa Clara",
+      "title": "NVIDIA AI Infra Summit — Santa Clara",
       "summary": "Live keynote from VP of Hyperscale and HPC Ian Buck anchors the full-stack AI infrastructure event.",
       "date": "2026-09-15",
       "type": "Event",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://www.nvidia.com/en-us/events/"
     },
     {
       "vendor": "Salesforce",
-      "title": "Dreamforce 2026 \u2014 San Francisco",
-      "summary": "15\u201317 Sep at Moscone. Agentic enterprise and Agentforce 360 are the central themes.",
+      "title": "Dreamforce 2026 — San Francisco",
+      "summary": "15–17 Sep at Moscone. Agentic enterprise and Agentforce 360 are the central themes.",
       "date": "2026-09-15",
       "type": "Event",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://www.salesforce.com/dreamforce/"
     },
     {
       "vendor": "Salesforce",
@@ -694,7 +731,8 @@ window.DASH = {
       "summary": "Connects humans, agents and Data 360. Salesforce cites 12,000 customers already on Agentforce.",
       "date": "2026-09-09",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.salesforce.com/agentforce/"
     },
     {
       "vendor": "Palantir",
@@ -702,15 +740,17 @@ window.DASH = {
       "summary": "Expanded collaboration targets enterprise AI deployment, M&A transformation and ERP modernization.",
       "date": "2026-09-03",
       "type": "Partnership",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.palantir.com"
     },
     {
       "vendor": "Workday",
       "title": "Workday Financial Analyst Day 2026",
-      "summary": "Annual investor event \u2014 expect updates on AI agent adoption and the Illuminate platform.",
+      "summary": "Annual investor event — expect updates on AI agent adoption and the Illuminate platform.",
       "date": "2026-10-13",
       "type": "Event",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://www.workday.com"
     },
     {
       "vendor": "UiPath",
@@ -718,7 +758,8 @@ window.DASH = {
       "summary": "Leadership set to demo coding agents, an AI-native canvas and agentic testing.",
       "date": "2026-09-01",
       "type": "Event",
-      "impact": "soon"
+      "impact": "soon",
+      "url": "https://www.uipath.com/events/fusion"
     },
     {
       "vendor": "CrowdStrike",
@@ -726,7 +767,8 @@ window.DASH = {
       "summary": "No net-new flagship model this window; still the endpoint AI baseline in the cyber catalog.",
       "date": "2026-08-20",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.crowdstrike.com"
     },
     {
       "vendor": "Oracle",
@@ -734,7 +776,8 @@ window.DASH = {
       "summary": "Enterprise buyers still pairing OCI Guardrails with Claude / OpenAI rather than a new Oracle frontier model this window.",
       "date": "2026-08-15",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.oracle.com/artificial-intelligence/"
     },
     {
       "vendor": "IBM",
@@ -742,7 +785,8 @@ window.DASH = {
       "summary": "QRadar remains the SIEM motion; watsonx orchestration for regulated estates.",
       "date": "2026-08-18",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.ibm.com/watsonx"
     },
     {
       "vendor": "SAP",
@@ -750,7 +794,8 @@ window.DASH = {
       "summary": "Agentic capabilities inside ERP processes rather than a standalone chatbot seat.",
       "date": "2026-08-22",
       "type": "New feature",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.sap.com/products/artificial-intelligence.html"
     },
     {
       "vendor": "ServiceNow",
@@ -758,7 +803,8 @@ window.DASH = {
       "summary": "Workflow agents on the Now Platform; pair with Copilot or Claude rather than replace them.",
       "date": "2026-08-25",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.servicenow.com/now-assist.html"
     },
     {
       "vendor": "Adobe",
@@ -766,7 +812,8 @@ window.DASH = {
       "summary": "No net-new Firefly foundation model in this 60-day window; Creative Cloud + Firefly is still the legal-safe default.",
       "date": "2026-08-12",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.adobe.com/products/firefly.html"
     },
     {
       "vendor": "Databricks",
@@ -774,7 +821,8 @@ window.DASH = {
       "summary": "Governance stays Unity Catalog; models are BYO OpenAI / Anthropic / open weights.",
       "date": "2026-08-28",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.databricks.com/product/artificial-intelligence"
     },
     {
       "vendor": "Snowflake",
@@ -782,15 +830,17 @@ window.DASH = {
       "summary": "Horizon governance plus hosted and partner models inside the warehouse.",
       "date": "2026-08-21",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.snowflake.com/en/product/features/cortex/"
     },
     {
       "vendor": "CrowdStrike",
       "title": "CrowdStrike Unveils the Next Evolution of the Agentic SOC",
-      "summary": "At Fal.Con 2026, Charlotte AI runs multi-agent investigations across endpoint, identity, SaaS, cloud and network. Falcon also listed on Anthropic\u2019s marketplace.",
+      "summary": "At Fal.Con 2026, Charlotte AI runs multi-agent investigations across endpoint, identity, SaaS, cloud and network. Falcon also listed on Anthropic’s marketplace.",
       "date": "2026-09-02",
       "type": "Platform",
-      "impact": "now"
+      "impact": "now",
+      "url": "https://www.crowdstrike.com/en-us/news/"
     }
   ],
   "vendorOrder": [
@@ -805,15 +855,15 @@ window.DASH = {
     "perplexity"
   ],
   "capOrder": [
-    "grok",
-    "openai",
-    "copilot",
-    "perplexity",
     "claude",
-    "gemini",
+    "copilot",
     "deepseek",
+    "gemini",
+    "grok",
     "metaai",
-    "mistral"
+    "mistral",
+    "openai",
+    "perplexity"
   ],
   "capabilities": [
     {
@@ -821,13 +871,13 @@ window.DASH = {
       "scores": {
         "grok": 8.5,
         "openai": 9.5,
-        "copilot": 8.0,
+        "copilot": 8,
         "perplexity": 7.5,
         "claude": 9.2,
         "gemini": 8.6,
-        "deepseek": 8.0,
+        "deepseek": 8,
         "metaai": 7.5,
-        "mistral": 8.0
+        "mistral": 8
       }
     },
     {
@@ -835,11 +885,11 @@ window.DASH = {
       "scores": {
         "grok": 8.4,
         "openai": 8.5,
-        "copilot": 8.0,
+        "copilot": 8,
         "perplexity": 9.6,
         "claude": 8.2,
-        "gemini": 9.0,
-        "deepseek": 7.0,
+        "gemini": 9,
+        "deepseek": 7,
         "metaai": 6.5,
         "mistral": 7.2
       }
@@ -847,36 +897,36 @@ window.DASH = {
     {
       "name": "Deep research",
       "scores": {
-        "grok": 8.0,
+        "grok": 8,
         "openai": 8.7,
         "copilot": 7.6,
         "perplexity": 9.5,
         "claude": 8.6,
         "gemini": 9.1,
         "deepseek": 6.8,
-        "metaai": 6.0,
-        "mistral": 7.0
+        "metaai": 6,
+        "mistral": 7
       }
     },
     {
       "name": "Coding",
       "scores": {
-        "grok": 8.0,
+        "grok": 8,
         "openai": 9.1,
-        "copilot": 9.0,
+        "copilot": 9,
         "perplexity": 6.2,
         "claude": 9.5,
         "gemini": 8.2,
         "deepseek": 8.8,
-        "metaai": 6.0,
-        "mistral": 8.0
+        "metaai": 6,
+        "mistral": 8
       }
     },
     {
       "name": "Building apps",
       "scores": {
         "grok": 7.6,
-        "openai": 9.0,
+        "openai": 9,
         "copilot": 8.2,
         "perplexity": 6.4,
         "claude": 9.1,
@@ -889,14 +939,14 @@ window.DASH = {
     {
       "name": "Hosting apps",
       "scores": {
-        "grok": 5.0,
+        "grok": 5,
         "openai": 6.4,
-        "copilot": 8.0,
+        "copilot": 8,
         "perplexity": 4.2,
         "claude": 5.4,
-        "gemini": 8.0,
+        "gemini": 8,
         "deepseek": 6.5,
-        "metaai": 5.0,
+        "metaai": 5,
         "mistral": 8.5
       }
     },
@@ -931,15 +981,15 @@ window.DASH = {
     {
       "name": "Summarizing",
       "scores": {
-        "grok": 8.0,
+        "grok": 8,
         "openai": 8.6,
         "copilot": 8.5,
         "perplexity": 8.6,
         "claude": 9.5,
         "gemini": 8.6,
         "deepseek": 7.6,
-        "metaai": 7.0,
-        "mistral": 8.0
+        "metaai": 7,
+        "mistral": 8
       }
     },
     {
@@ -950,7 +1000,7 @@ window.DASH = {
         "copilot": 8.1,
         "perplexity": 7.2,
         "claude": 9.4,
-        "gemini": 8.0,
+        "gemini": 8,
         "deepseek": 6.5,
         "metaai": 5.5,
         "mistral": 7.5
@@ -961,41 +1011,41 @@ window.DASH = {
       "scores": {
         "grok": 9.5,
         "openai": 8.1,
-        "copilot": 8.0,
+        "copilot": 8,
         "perplexity": 9.2,
         "claude": 7.2,
         "gemini": 9.3,
-        "deepseek": 6.0,
+        "deepseek": 6,
         "metaai": 7.5,
-        "mistral": 7.0
+        "mistral": 7
       }
     },
     {
       "name": "Images",
       "scores": {
         "grok": 8.5,
-        "openai": 9.0,
-        "copilot": 8.0,
-        "perplexity": 7.0,
-        "claude": 3.0,
-        "gemini": 9.0,
-        "deepseek": 5.0,
+        "openai": 9,
+        "copilot": 8,
+        "perplexity": 7,
+        "claude": 3,
+        "gemini": 9,
+        "deepseek": 5,
         "metaai": 7.5,
-        "mistral": 7.0
+        "mistral": 7
       }
     },
     {
       "name": "Video",
       "scores": {
-        "grok": 8.0,
+        "grok": 8,
         "openai": 7.6,
-        "copilot": 5.0,
+        "copilot": 5,
         "perplexity": 6.2,
-        "claude": 2.0,
+        "claude": 2,
         "gemini": 9.4,
-        "deepseek": 3.0,
-        "metaai": 7.0,
-        "mistral": 4.0
+        "deepseek": 3,
+        "metaai": 7,
+        "mistral": 4
       }
     },
     {
@@ -1009,48 +1059,30 @@ window.DASH = {
         "gemini": 9.4,
         "deepseek": 5.5,
         "metaai": 8.5,
-        "mistral": 7.0
+        "mistral": 7
       }
     },
     {
       "name": "Privacy / no-train default",
       "scores": {
         "grok": 7.5,
-        "openai": 8.0,
+        "openai": 8,
         "copilot": 8.4,
         "perplexity": 8.2,
         "claude": 9.2,
-        "gemini": 8.0,
+        "gemini": 8,
         "deepseek": 4.5,
         "metaai": 4.5,
-        "mistral": 9.0
+        "mistral": 9
       }
     }
   ],
   "licenseInd": [
     [
-      "Grok",
-      "Capped",
-      "SuperGrok $30",
-      "Plus $100 / Heavy $300"
-    ],
-    [
       "ChatGPT",
       "Yes (ads in some regions)",
       "Plus $20 (Go $8)",
       "Pro $100 or $200"
-    ],
-    [
-      "Copilot",
-      "Web chat",
-      "M365 Premium ~$20",
-      "M365 Copilot add-on"
-    ],
-    [
-      "Perplexity",
-      "~5 Pro searches/day",
-      "Pro $20",
-      "Max $200"
     ],
     [
       "Claude",
@@ -1059,16 +1091,28 @@ window.DASH = {
       "Max $100 / $200"
     ],
     [
-      "Gemini",
-      "Generous Flash",
-      "AI Pro $19.99 (Plus ~$5\u20138)",
-      "Ultra $100 / $200"
+      "Copilot",
+      "Web chat",
+      "M365 Premium ~$20",
+      "M365 Copilot add-on"
     ],
     [
       "DeepSeek",
       "Chat app free",
-      "No consumer seat \u2014 API only",
+      "No consumer seat — API only",
       "V4 Pro peak ~$1.32 / $3.96"
+    ],
+    [
+      "Gemini",
+      "Generous Flash",
+      "AI Pro $19.99 (Plus ~$5–8)",
+      "Ultra $100 / $200"
+    ],
+    [
+      "Grok",
+      "Capped",
+      "SuperGrok $30",
+      "Plus $100 / Heavy $300"
     ],
     [
       "Meta AI",
@@ -1081,50 +1125,35 @@ window.DASH = {
       "Le Chat free (~25 msgs)",
       "Pro $14.99 (students ~$6)",
       "Team $24.99/user"
+    ],
+    [
+      "Perplexity",
+      "~5 Pro searches/day",
+      "Pro $20",
+      "Max $200"
     ]
   ],
   "licenseEnt": [
     [
-      "Grok",
-      "Business $30/seat",
-      "Custom \u2014 SSO, SCIM, CMEK",
-      "Seat only; API extra",
-      "Business/Ent: not trained on customer data"
-    ],
-    [
       "ChatGPT",
-      "Business $20\u201325/user; Premium $100\u2013125",
-      "Custom \u2014 residency, SLA, SCIM",
-      "Seat \u2260 API. API billed separately",
+      "Business $20–25/user; Premium $100–125",
+      "Custom — residency, SLA, SCIM",
+      "Seat ≠ API. API billed separately",
       "Business/Ent: no training by default"
     ],
     [
-      "Copilot",
-      "Copilot Business ~$18\u201321 + M365 base",
-      "$30 add-on on E3/E5; E7 $99 bundles",
-      "All-in \u2248 $69 on E3, \u2248 $90 on E5",
-      "Tenant data in Graph / Purview"
-    ],
-    [
-      "Perplexity",
-      "Enterprise seats + Comet controls",
-      "Custom SSO / SCIM",
-      "Research seat, not a suite",
-      "Enterprise: no training default"
-    ],
-    [
       "Claude",
-      "Team ~$25\u201330; Premium usage",
+      "Team ~$25–30; Premium usage",
       "Enterprise + ZDR + HIPAA options",
       "API extra; Fable burns quota fast",
       "ZDR / no-train is the point"
     ],
     [
-      "Gemini",
-      "Workspace + Gemini add-on",
-      "Gemini Enterprise on GCP",
-      "Bundle with Workspace",
-      "Google Cloud DPA / no-train on Ent"
+      "Copilot",
+      "Copilot Business ~$18–21 + M365 base",
+      "$30 add-on on E3/E5; E7 $99 bundles",
+      "All-in ≈ $69 on E3, ≈ $90 on E5",
+      "Tenant data in Graph / Purview"
     ],
     [
       "DeepSeek",
@@ -1134,11 +1163,25 @@ window.DASH = {
       "Assume training unless contract says else"
     ],
     [
+      "Gemini",
+      "Workspace + Gemini add-on",
+      "Gemini Enterprise on GCP",
+      "Bundle with Workspace",
+      "Google Cloud DPA / no-train on Ent"
+    ],
+    [
+      "Grok",
+      "Business $30/seat",
+      "Custom — SSO, SCIM, CMEK",
+      "Seat only; API extra",
+      "Business/Ent: not trained on customer data"
+    ],
+    [
       "Meta AI",
       "No standard enterprise admin plane",
       "Llama via partners / self-host",
       "Consumer reach, not a tenant",
-      "Llama weights \u2260 Meta AI consumer chat"
+      "Llama weights ≠ Meta AI consumer chat"
     ],
     [
       "Mistral",
@@ -1146,17 +1189,24 @@ window.DASH = {
       "Le Platform + VPC / on-prem",
       "EU control plane is the product",
       "Customer data stays on chosen plane"
+    ],
+    [
+      "Perplexity",
+      "Enterprise seats + Comet controls",
+      "Custom SSO / SCIM",
+      "Research seat, not a suite",
+      "Enterprise: no training default"
     ]
   ],
   "whatsNew": {
-    "eyebrow": "This month in Enterprise AI",
+    "eyebrow": "",
     "headline": "Agentic AI goes wall-to-wall across the enterprise stack.",
     "lede": "September opens with Claude Fable 5.1 landing across Microsoft Copilot and AWS Bedrock, Google shipping Gemini 3.8 Flash to GA, and Salesforce, SAP and other vendors pushing agentic capabilities deeper into production.",
     "featured": [
-      "Dreamforce 2026 \u2014 San Francisco",
+      "Dreamforce 2026 — San Francisco",
       "OpenAI unveils GPT-6 Astra",
       "Palantir expands PwC alliance to scale enterprise AI",
-      "Gemini 3.8 Flash ships as Google\u2019s fastest workhorse",
+      "Gemini 3.8 Flash ships as Google’s fastest workhorse",
       "Anthropic and Salesforce launch deeper Agentforce hookup",
       "CrowdStrike Unveils the Next Evolution of the Agentic SOC"
     ]
@@ -1174,10 +1224,6 @@ window.DASH = {
     "Release notes"
   ],
   "newsImpacts": [
-    [
-      "ga",
-      "GA \u00b7 Available now"
-    ],
     [
       "now",
       "Available now"
@@ -1214,5 +1260,6 @@ window.DASH = {
     "Palantir",
     "UiPath",
     "CrowdStrike"
-  ]
+  ],
+  "windowDays": 60
 };

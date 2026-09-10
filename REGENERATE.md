@@ -40,5 +40,8 @@ Keep this shape:
 News window: last 60 days only.
 Vendors: OpenAI, ChatGPT, Claude, Perplexity, Grok, Microsoft, Google, AWS, NVIDIA, Meta, IBM, SAP, ServiceNow, Oracle, Salesforce, Workday, Adobe, Databricks, Snowflake, Palantir, UiPath, CrowdStrike.
 Types: Model release, New feature, Platform, Partnership, Integration, Pricing, Security & privacy, Governance, Event, Release notes.
-Impact: ga | now | announced | soon.
+Impact: now | announced | soon. (merge former GA into now)
+Each news item needs url (source link).
+Window is last 60 days from generated date, not calendar month.
+apiPrices rows: [vendor, model, input, output, released, note]
 API prices from official list pages. Do not invent events.

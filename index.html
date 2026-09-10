@@ -121,17 +121,29 @@
   .filter-search button {
     border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 0 16px; cursor: pointer;
   }
-  .frow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
-  .frow .flab { font-size: 11px; color: var(--muted); text-transform: uppercase; width: 58px; letter-spacing: .4px; }
+  .frow { display: grid; grid-template-columns: 64px 1fr; gap: 8px; align-items: start; margin-top: 12px; }
+  .frow .flab { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; padding-top: 8px; }
+  .frow .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .fchip { font-size: 13px; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; cursor: pointer; color: #1b2437; }
   .fchip.on { background: #12203a; color: #fff; border-color: #12203a; }
   .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
-  .dot.ga { background: #16a34a; } .dot.now { background: #2563eb; } .dot.ann { background: #f59e0b; } .dot.soon { background: #7c3aed; }
+  .dot.now { background: #16a34a; } .dot.announced { background: #dc2626; } .dot.soon { background: #2563eb; }
   .news-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-  .ncard { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 14px; border-left: 4px solid #22c55e; min-height: 150px; }
-  .ncard.soon { border-left-color: #7c3aed; }
-  .ncard.announced { border-left-color: #f59e0b; }
-  .ncard.ga { border-left-color: #16a34a; }
+  a.ncard { color: inherit; text-decoration: none; display: block; }
+  a.ncard:hover { border-color: #cbd5e1; }
+  .ncard { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 14px; border-left: 4px solid #16a34a; min-height: 150px; }
+  .ncard.now { border-left-color: #16a34a; }
+  .ncard.soon { border-left-color: #2563eb; }
+  .ncard.announced { border-left-color: #dc2626; }
+  .score-key { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+  .score-key span { display: inline-flex; align-items: center; gap: 6px; }
+  .vendor-mtx { max-width: 52%; }
+  .vendor-mtx table { font-size: 12px; }
+  .vendor-mtx .scorepill { min-width: 28px; font-size: 11px; padding: 1px 5px; }
+  a.vtitle { display: inline-flex; align-items: center; gap: 12px; line-height: 1; }
+  a.vtitle img.logo { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; background: #fff; flex: 0 0 28px; }
+  .kpi-link { color: inherit; text-decoration: none; display: block; }
+  .kpi-link:hover { border-color: #e2b94a; }
   .ncard h3 { margin: 8px 0 6px; font-size: 16px; }
   .pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .pill { font-size: 11px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; background: #f8fafc; }
@@ -177,7 +189,7 @@
 <body>
 <header>
   <h1>AI Tools Comparison</h1>
-  <div class="sub">Assistants · specialist tools · cybersecurity &nbsp;|&nbsp; 8 September 2026 &nbsp;|&nbsp; One file</div>
+  <div class="sub" id="refreshed">Data refreshed —</div>
   <div class="tabs" id="tabs"></div>
 </header>
 <main>
@@ -188,14 +200,14 @@
 
   <div class="grid g3" style="margin-top:14px">
     <a class="card tile" href="#asst-overview">
-      <div class="k">Layer 1 — daily brain</div>
+      <div class="k">Layer 1 — Generalist</div>
       <div class="t">Assistants</div>
       <p>Nine general models. Start here for chat, research, code, docs, legal first-pass. Open the Assistants snapshot, KPI matrix, and vendor tabs.</p>
     </a>
     <a class="card tile" href="#other">
-      <div class="k">Layer 2 — specialists</div>
+      <div class="k">Layer 2 — Specialists</div>
       <div class="t">Writing, decks, video, meetings</div>
-      <p>Buy when the assistant drafts “good enough” but you need brand kits, avatar video, CRM notes, or self-hosted agents at scale.</p>
+      <p>Buy when the assistant drafts “good enough” but you need a specialist one-off tool for a specific group to do dedicated tasks. Things such as brand kits, marketing, avatar videos, and such.</p>
     </a>
     <a class="card tile" href="#cyber">
       <div class="k">Layer 3 — security products</div>
@@ -229,26 +241,6 @@
     </div>
   </div>
 
-  <h4>Job → first pick (assistants + specialists)</h4>
-  <div class="card">
-    <table>
-      <tr><th>Job</th><th>Start with the assistant</th><th>Buy a specialist when…</th><th>Specialist</th></tr>
-      <tr><td>Everyday chat / reasoning</td><td class="winner">ChatGPT or Claude</td><td>Never — this is the assistant’s job</td><td>—</td></tr>
-      <tr><td>Cited market / web research</td><td class="winner">Perplexity</td><td>You need permissions-aware internal search</td><td>Glean</td></tr>
-      <tr><td>Your own binder / deal room</td><td>Claude / Gemini</td><td>Corpus must stay grounded, no live web</td><td>NotebookLM</td></tr>
-      <tr><td>On-brand marketing copy</td><td>ChatGPT</td><td>Many writers + locked voice + campaigns</td><td>Jasper / Writer</td></tr>
-      <tr><td>Style / compliance QA</td><td>Claude (careful prose)</td><td>Org-wide enforcement in the browser</td><td>Grammarly Business / Writer</td></tr>
-      <tr><td>Board / exec deck tonight</td><td>Claude Design / Copilot PPT</td><td>You want finished web-style slides, not a draft</td><td>Gamma / Prezent</td></tr>
-      <tr><td>L&amp;D talking-head video</td><td>Do not use a chatbot</td><td>Always — avatars are a different product</td><td>Synthesia / Colossyan</td></tr>
-      <tr><td>Generative film / B-roll</td><td>Gemini Veo / ChatGPT Sora</td><td>Agency pipeline and creative ops</td><td>LTX Studio</td></tr>
-      <tr><td>Commercially safe images</td><td>ChatGPT / Gemini / Grok</td><td>Legal wants indemnity inside Creative Cloud</td><td>Adobe Firefly</td></tr>
-      <tr><td>Non-designer layouts</td><td>Copilot / Gemini</td><td>Brand kit + SSO for coordinators</td><td>Canva Enterprise</td></tr>
-      <tr><td>Meeting notes</td><td class="winner">Copilot Recap / Gemini Meet</td><td>CRM push or no-bot capture</td><td>Fireflies / Granola / Otter</td></tr>
-      <tr><td>Coding in the IDE</td><td>Claude Code / ChatGPT</td><td>Private-code VPC or power-user IDE</td><td>Tabnine / Cursor / GitHub Copilot</td></tr>
-      <tr><td>Self-hosted agents</td><td>Mistral / Claude API</td><td>You must own the runtime</td><td>n8n</td></tr>
-      <tr><td>Contracts first-pass</td><td class="winner">Claude</td><td>Never skip counsel — specialist legal AI is a later buy</td><td>—</td></tr>
-    </table>
-  </div>
 
   <h4>Do not double-pay</h4>
   <div class="grid g2">
@@ -277,19 +269,6 @@
     </div>
   </div>
 
-  <div class="card" style="margin-top:14px">
-    <h3>Where to click next</h3>
-    <p class="small" style="margin-bottom:8px">Assistants tabs keep the original KPI matrix, licensing, per-vendor models, and CISO view. Specialist and Cyber tabs are the function matrices with the same 0–10 pills.</p>
-    <div class="jump">
-      <a class="jump-btn" href="#whatsnew">What's New in AI</a>
-      <a class="jump-btn" href="#asst-overview">Generalist / Assistants</a>
-      
-      
-      <a class="jump-btn" href="#ciso">CISO / assistants</a>
-      <a class="jump-btn" href="#other">Specialist tools</a>
-      <a class="jump-btn" href="#cyber">Cybersecurity tools</a>
-    </div>
-  </div>
 </section>
 
 
@@ -312,7 +291,7 @@
 <section class="page" id="asst-overview">
   <div class="vendor-btns" id="vendor-btns"></div>
   <h2>Generalist / Assistants</h2>
-  <p class="muted" style="margin-top:-8px">Every figure on this tab is painted from <code>data.js</code>. Replace that file to refresh.</p>
+  <p class="muted" style="margin-top:-8px">Overall Score</p>
   <div class="grid g3" id="snap-kpis"></div>
   <div class="card" style="margin-top:14px">
     <h3>Job → first pick (assistants + specialists)</h3>
@@ -1011,7 +990,7 @@
       <li>Roundups: PCMag Best AI Chatbots (26 Aug 2026), Notebookcheck subscription comparison (Jul 2026), Craze / Pick-Right / GeoAura 2026 scoreboards.</li>
       <li>Model drops: Grok 4.6 (12 Aug 2026), GPT-5.6 (9 Jul 2026), Claude Fable 5.1 (1 Sep 2026), Gemini 3.8 Flash (2 Sep 2026), Copilot Cowork GA (16 Jun 2026).</li>
     </ul>
-    <div class="callout">Practical stack: Claude or ChatGPT as the daily driver + Perplexity for sourced research + Copilot or Gemini if that is your suite + Grok if X is the job. Add DeepSeek for cheap non-sensitive API volume, Mistral when data must stay in the EU or on-prem, and Meta AI only for consumer/social reach.</div>
+    
   </div>
 </section>
 
@@ -1395,8 +1374,8 @@
     ["overview","Overview"],
     ["whatsnew","What's New in AI"],
     ["asst-overview","Generalist / Assistants"],
+    ["other","Specialists"],
     ["ciso","CISO"],
-    ["other","Specialist tools"],
     ["cyber","Cybersecurity"],
     ["notes","Notes"]
   ];
@@ -1448,11 +1427,11 @@
   function renderSnap(){
     const box=el("snap-kpis"); if(!box) return;
     const D=window.DASH;
-    const order=["grok","openai","copilot","perplexity","claude","gemini","deepseek","metaai","mistral"];
+    const order=D.vendorOrder||Object.keys(D.vendors||{});
     box.innerHTML = order.map(id=>{
       const v=D.vendors[id]; if(!v) return "";
-      return `<div class="card kpi"><div class="name">${v.name}</div><div class="score" style="color:${v.color||'#12203a'}">${v.score}</div><div class="note">${v.note||""}</div></div>`;
-    }).join("");
+      return `<a class="card kpi kpi-link" href="#${id}" data-go="${id}"><div class="name">${v.name}</div><div class="score" style="color:${v.color||'#12203a'}">${v.score}</div><div class="note">${v.note||""}</div></a>`;
+    }).join("") + `<div class="score-key" style="grid-column:1/-1"><span><span class="scorepill s9">9+</span> top</span><span><span class="scorepill s8">8</span></span><span><span class="scorepill s7">7</span></span><span><span class="scorepill s6">6</span></span><span><span class="scorepill s5">5</span></span><span><span class="scorepill s4">4−</span> lowest</span></div>`;
   }
   function renderVendorBtns(){
     const box=el("vendor-btns"); if(!box) return;
@@ -1470,7 +1449,7 @@
   function renderMatrix(targetId, only){
     const box=el(targetId); if(!box) return;
     const D=window.DASH;
-    const order=D.capOrder||[];
+    const order=(D.capOrder && D.capOrder.slice()) || [];
     const names={grok:"Grok",openai:"OpenAI",copilot:"Copilot",perplexity:"Perplexity",claude:"Claude",gemini:"Gemini",deepseek:"DeepSeek",metaai:"Meta AI",mistral:"Mistral"};
     const cols = only ? [only] : order;
     let h=`<table class="mtx"><tr><th>Capability</th>${cols.map(id=>`<th>${names[id]||id}</th>`).join("")}</tr>`;
@@ -1484,16 +1463,21 @@
   }
   function renderLic(){
     const ind=el("lic-ind");
+    const byName = (a,b)=>String(a[0]).localeCompare(String(b[0]));
     if(ind) ind.innerHTML = `<table><tr><th>Tool</th><th>Free</th><th>Everyday paid</th><th>Power user</th></tr>` +
-      (window.DASH.licenseInd||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("") + "</table>";
+      (window.DASH.licenseInd||[]).slice().sort(byName).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("") + "</table>";
     const ent=el("lic-ent");
     if(ent) ent.innerHTML = `<table><tr><th>Tool</th><th>Team / business</th><th>Enterprise</th><th>True all-in note</th><th>Data training</th></tr>` +
-      (window.DASH.licenseEnt||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("") + "</table>";
+      (window.DASH.licenseEnt||[]).slice().sort(byName).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("") + "</table>";
   }
   function renderApi(){
     const box=el("api-prices"); if(!box) return;
-    box.innerHTML = `<table><tr><th>Model</th><th>Vendor</th><th>Input / 1M</th><th>Output / 1M</th><th>Note</th></tr>` +
-      (window.DASH.apiPrices||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>$${r[2]}</td><td>$${r[3]}</td><td>${r[4]}</td></tr>`).join("") + "</table>";
+    const rows=(window.DASH.apiPrices||[]).slice().sort((a,b)=>{
+      const c=String(a[0]).localeCompare(String(b[0]));
+      return c!==0 ? c : String(a[1]).localeCompare(String(b[1]));
+    });
+    box.innerHTML = `<table><tr><th>Vendor</th><th>Model</th><th>Released</th><th>Input / 1M</th><th>Output / 1M</th><th>Note</th></tr>` +
+      rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[4]||""}</td><td>$${r[2]}</td><td>$${r[3]}</td><td>${r[5]||""}</td></tr>`).join("") + "</table>";
     const n=el("api-note");
     if(n) n.textContent = "Official-list snapshot " + (window.DASH.generated||"") + ". Long-context multipliers and Fast/Batch tiers extra.";
   }
@@ -1509,41 +1493,62 @@
     (D.vendorOrder||[]).forEach(id=>{
       const v=D.vendors[id]; if(!v) return;
       const bars=el("bars-"+id);
+      const sec=document.getElementById(id);
+      let btns=sec && sec.querySelector(".vendor-btns");
+      if(sec && !btns){
+        btns=document.createElement("div");
+        btns.className="vendor-btns";
+        sec.insertBefore(btns, sec.firstChild);
+      }
+      if(btns) btns.innerHTML = (D.vendorOrder||[]).map(vid=>{
+        const vv=D.vendors[vid]; if(!vv) return "";
+        return `<a href="#${vid}" data-go="${vid}">${vv.name}</a>`;
+      }).join("");
       if(bars) bars.innerHTML = `<div class="grid g3">
         <div class="card">${bar("AI Maturity", v.maturity,false)}</div>
         <div class="card">${bar("Industry Adoption", v.adoption,false)}</div>
         <div class="card">${bar("Enterprise Pricing Tier", v.pricingTier,true)}</div></div>`;
-      renderMatrix("col-"+id, id);
-      const newsBox=el("news-"+id);
-      if(newsBox){
-        const aliases={openai:["OpenAI","ChatGPT"],copilot:["Microsoft","Copilot"],gemini:["Google","Gemini"],metaai:["Meta","Meta AI"],grok:["Grok","xAI"],claude:["Claude","Anthropic"],perplexity:["Perplexity"],deepseek:["DeepSeek"],mistral:["Mistral"]};
-        const names=aliases[id]||[v.name];
-        const items=(D.news||[]).filter(n=> names.some(a => (n.vendor||"").toLowerCase().includes(a.toLowerCase()) || a.toLowerCase().includes((n.vendor||"").toLowerCase())));
+      const col=el("col-"+id);
+      if(col){ col.className="card vendor-mtx"; renderMatrix("col-"+id, id); }
+      const aliases={openai:["OpenAI","ChatGPT"],copilot:["Microsoft","Copilot"],gemini:["Google","Gemini"],metaai:["Meta","Meta AI"],grok:["Grok","xAI"],claude:["Claude","Anthropic"],perplexity:["Perplexity"],deepseek:["DeepSeek"],mistral:["Mistral"]};
+      const names=aliases[id]||[v.name];
+      const items=(D.news||[]).filter(n=> names.some(a => (n.vendor||"").toLowerCase().includes(a.toLowerCase()) || a.toLowerCase().includes((n.vendor||"").toLowerCase())));
+      let newsBox=el("news-"+id);
+      if(!newsBox && sec){ newsBox=document.createElement("div"); newsBox.id="news-"+id; }
+      if(newsBox && sec){ sec.appendChild(newsBox);
         newsBox.innerHTML = `<h3>Recent news (last 60 days)</h3><div class="news-grid">${items.map(newsCard).join("")||"<p class='small'>No items in this window.</p>"}</div>
           <p style="margin-top:10px"><a class="jump-btn" href="#whatsnew">All What’s New in AI →</a></p>`;
       }
     });
   }
-  function impactClass(i){ return i==="soon"?"soon":i==="announced"?"announced":i==="ga"?"ga":""; }
+  function impactClass(i){ return i==="soon"?"soon":i==="announced"?"announced":"now"; }
   function impactLabel(i){
     const hit=(window.DASH.newsImpacts||[]).find(x=>x[0]===i);
     return hit?hit[1]:i;
   }
   function newsCard(n){
-    const d={ga:"ga",now:"now",announced:"ann",soon:"soon"}[n.impact]||"now";
-    return `<article class="ncard ${impactClass(n.impact)}" data-type="${n.type}" data-impact="${n.impact}" data-vendor="${n.vendor}">
-      <div class="pills"><span class="pill">${n.vendor}</span><span class="pill">${n.type}</span><span class="pill"><i class="dot ${d}"></i>${impactLabel(n.impact)}</span></div>
+    const d=impactClass(n.impact);
+    const href = n.url ? `href="${n.url}" target="_blank" rel="noopener"` : "";
+    const tag = n.url ? "a" : "article";
+    return `<${tag} class="ncard ${d}" ${href} data-type="${n.type}" data-impact="${n.impact==="ga"?"now":n.impact}" data-vendor="${n.vendor}">
+      <div class="pills"><span class="pill">${n.vendor}</span><span class="pill">${n.type}</span><span class="pill"><i class="dot ${d}"></i>${impactLabel(n.impact==="ga"?"now":n.impact)}</span></div>
       <h3>${n.title}</h3>
       <p class="small">${n.summary}</p>
       <div class="small">${n.date}</div>
-    </article>`;
+    </${tag}>`;
   }
   let newsState={q:"",type:"",impact:"",vendor:""};
   function filteredNews(){
     const q=(newsState.q||"").toLowerCase();
+    const days=window.DASH.windowDays||60;
+    const cutoff=new Date(window.DASH.generated||Date.now());
+    cutoff.setDate(cutoff.getDate()-days);
     return (window.DASH.news||[]).filter(n=>{
+      const imp=n.impact==="ga"?"now":n.impact;
+      const dt=n.date?new Date(n.date):null;
+      if(dt && !isNaN(dt) && dt<cutoff && imp!=="soon") return false;
       if(newsState.type && n.type!==newsState.type) return false;
-      if(newsState.impact && n.impact!==newsState.impact) return false;
+      if(newsState.impact && imp!==newsState.impact) return false;
       if(newsState.vendor && n.vendor!==newsState.vendor) return false;
       if(q && !(n.title+" "+n.summary+" "+n.vendor).toLowerCase().includes(q)) return false;
       return true;
@@ -1552,9 +1557,16 @@
   function renderNewsPage(){
     const D=window.DASH; const all=D.news||[];
     const wn=D.whatsNew||{};
-    const e=el("wn-eyebrow"); if(e) e.textContent=wn.eyebrow||"";
+    const e=el("wn-eyebrow"); if(e) e.style.display="none";
     const h=el("wn-headline"); if(h) h.textContent=wn.headline||"";
-    const l=el("wn-lede"); if(l) l.textContent=wn.lede||"";
+    const l=el("wn-lede");
+    if(l){
+      const top4 = (wn.featured||[]).slice(0,4);
+      const items = top4.map(title => (all.find(n=>n.title===title)||{title}).title);
+      l.textContent = items.length
+        ? items.slice(0,2).join("; ") + ". " + items.slice(2).join("; ") + (items.length? "." : "")
+        : (wn.lede||"");
+    }
     const glance=el("news-glance");
     if(glance) glance.innerHTML = `<div class="gcap">At a glance</div>
       <div class="gstat"><b>${all.length}</b> announcements tracked</div>
@@ -1565,9 +1577,9 @@
     const box=el("news-filters");
     if(box){
       box.innerHTML = `<div class="filter-search"><input id="news-q" placeholder="Search headlines and descriptions..." value="${newsState.q||""}"><button type="button" id="news-clear">Clear</button></div>
-        <div class="frow"><span class="flab">Type</span>${(D.newsTypes||[]).map(x=>`<button type="button" class="fchip ${newsState.type===x?"on":""}" data-nf="type" data-v="${x}">${x}</button>`).join("")}</div>
-        <div class="frow"><span class="flab">Impact</span>${(D.newsImpacts||[]).map(([k,lab])=>`<button type="button" class="fchip ${newsState.impact===k?"on":""}" data-nf="impact" data-v="${k}"><i class="dot ${k==="announced"?"ann":k}"></i>${lab}</button>`).join("")}</div>
-        <div class="frow"><span class="flab">Vendor</span>${(D.newsVendors||[]).map(x=>`<button type="button" class="fchip ${newsState.vendor===x?"on":""}" data-nf="vendor" data-v="${x}">${x}</button>`).join("")}</div>
+        <div class="frow"><span class="flab">Type</span><div class="chips">${(D.newsTypes||[]).map(x=>`<button type="button" class="fchip ${newsState.type===x?"on":""}" data-nf="type" data-v="${x}">${x}</button>`).join("")}</div></div>
+        <div class="frow"><span class="flab">Impact</span><div class="chips">${(D.newsImpacts||[]).map(([k,lab])=>`<button type="button" class="fchip ${newsState.impact===k?"on":""}" data-nf="impact" data-v="${k}"><i class="dot ${k}"></i>${lab}</button>`).join("")}</div></div>
+        <div class="frow"><span class="flab">Vendor</span><div class="chips">${(D.newsVendors||[]).map(x=>`<button type="button" class="fchip ${newsState.vendor===x?"on":""}" data-nf="vendor" data-v="${x}">${x}</button>`).join("")}</div></div>
         <p class="small" id="news-count">${filteredNews().length} announcements</p>`;
       const q=el("news-q"); if(q) q.oninput=ev=>{ newsState.q=ev.target.value; renderNewsPage(); };
       const c=el("news-clear"); if(c) c.onclick=()=>{ newsState={q:"",type:"",impact:"",vendor:""}; renderNewsPage(); };
@@ -1595,6 +1607,12 @@
     renderApi();
     renderVendorChrome();
     renderNewsPage();
+    const sub=el("refreshed");
+    if(sub && window.DASH.generated){
+      const d=window.DASH.generated;
+      const pretty = new Date(d+"T00:00:00").toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});
+      sub.textContent = "Data refreshed " + pretty;
+    }
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", bootDash);
   else bootDash();
