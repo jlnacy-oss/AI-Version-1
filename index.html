@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Tools Comparison — Sept 2026</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --panel: #ffffff;
+    --panel2: #eef2f8;
+    --line: #d5dce8;
+    --text: #1b2437;
+    --muted: #5c6b86;
+    --gold: #b8860b;
+    --teal: #0f766e;
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #15803d;
+    --orange: #c2410c;
+    --purple: #7c3aed;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: "Segoe UI", Inter, system-ui, sans-serif; }
+  body { min-height: 100vh; }
+  header {
+    padding: 22px 28px 8px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #ffffff 0%, #f4f6fb 100%);
+    position: sticky; top: 0; z-index: 20;
+  }
+  h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -0.3px; color: #12203a; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 12px; }
+  .tab {
+    background: #ffffff; border: 1px solid var(--line); color: var(--muted);
+    padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px;
+  }
+  .tab:hover { border-color: #b7c2d6; color: var(--text); }
+  .tab.active { color: #12203a; background: #f3d48a; border-color: #e2b94a; font-weight: 700; }
+  main { padding: 20px 28px 60px; max-width: 1400px; margin: 0 auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .page:target { display: block; }
+  body:has(.page:target) .page.active:not(:target) { display: none; }
+  .grid { display: grid; gap: 14px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g6 { grid-template-columns: repeat(6, 1fr); }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  }
+  .card h3 { margin: 0 0 8px; font-size: 15px; color: #8a6a12; }
+  .kpi { text-align: center; }
+  .kpi .name { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+  .kpi .score { font-size: 28px; font-weight: 750; margin: 6px 0 2px; }
+  .kpi .note { font-size: 12px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 8px; text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
+  .scorepill {
+    display: inline-block; min-width: 34px; text-align: center; padding: 2px 7px;
+    border-radius: 999px; font-weight: 700; font-size: 12px; color: #12203a;
+  }
+  .s9 { background: #86efac; } .s8 { background: #bef264; } .s7 { background: #fde68a; }
+  .s6 { background: #fdba74; } .s5 { background: #fca5a5; } .s4 { background: #ef4444; color: #fff; }
+  .winner { color: #8a6a12; font-weight: 700; }
+  ul.clean { margin: 8px 0 0; padding-left: 18px; color: #243049; }
+  ul.clean li { margin: 5px 0; }
+  .badge { display: inline-block; background: var(--panel2); border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; font-size: 11px; color: var(--teal); margin-right: 4px; }
+  .callout { background: #fff8e8; border-left: 3px solid #e2b94a; padding: 10px 12px; border-radius: 0 8px 8px 0; color: #243049; font-size: 13px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 12px; color: var(--muted); }
+  h2 { margin: 6px 0 14px; font-size: 22px; color: #12203a; }
+  h4 { margin: 14px 0 8px; font-size: 14px; color: var(--teal); }
+  @media (max-width: 1100px) {
+    .g6, .g3, .g2 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .g6, .g3, .g2 { grid-template-columns: 1fr; }
+    main, header { padding-left: 14px; padding-right: 14px; }
+  }
+
+  .card p { margin: 0; font-size: 13.5px; line-height: 1.45; color: #243049; }
+  .jump { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .jump a, .jump-btn {
+    font-size: 12px; color: #12203a; text-decoration: none;
+    border: 1px solid var(--line); background: #fff; padding: 5px 9px; border-radius: 999px;
+    cursor: pointer; font-family: inherit;
+  }
+  .jump a:hover, .jump-btn:hover { border-color: #e2b94a; background: #fff8e8; }
+  a.tile { color: inherit; text-decoration: none; display: block; }
+  .tile { cursor: pointer; }
+  .tile:hover { border-color: #e2b94a; }
+  .tile .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .tile .t { font-size: 18px; font-weight: 700; margin: 6px 0 6px; color: #12203a; }
+  .mtx td { text-align: center; }
+  .mtx td:first-child, .mtx th:first-child { text-align: left; }
+  #other .g2, #cyber .g2 { grid-template-columns: 1fr; }
+
+
+  .vendor-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .vendor-btns a {
+    border: 1px solid var(--line); background: #fff; border-radius: 10px;
+    padding: 8px 14px; text-decoration: none; color: #12203a; font-size: 13px; font-weight: 600;
+  }
+  .vendor-btns a:hover { border-color: #e2b94a; background: #fff8e8; }
+  .wn-hero { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 18px; align-items: start; margin-bottom: 22px; }
+  .eyebrow { color: #2563eb; font-size: 13px; font-weight: 700; margin: 0 0 8px; }
+  .wn-hero h2 { font-size: 34px; line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.4px; }
+  .glance { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 8px 20px 12px; }
+  .glance .gcap { font-size: 11px; letter-spacing: .8px; color: var(--muted); text-transform: uppercase; padding: 12px 0 8px; }
+  .gstat { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--line); }
+  .gstat b { color: #2563eb; font-size: 28px; min-width: 42px; }
+  .filters { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px 12px; margin: 8px 0 22px; }
+  .filter-search { display: flex; gap: 10px; }
+  .filter-search input {
+    flex: 1; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px; background: #f8fafc;
+  }
+  .filter-search button {
+    border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 0 16px; cursor: pointer;
+  }
+  .frow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+  .frow .flab { font-size: 11px; color: var(--muted); text-transform: uppercase; width: 58px; letter-spacing: .4px; }
+  .fchip { font-size: 13px; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; cursor: pointer; color: #1b2437; }
+  .fchip.on { background: #12203a; color: #fff; border-color: #12203a; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot.ga { background: #16a34a; } .dot.now { background: #2563eb; } .dot.ann { background: #f59e0b; } .dot.soon { background: #7c3aed; }
+  .news-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .ncard { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 14px; border-left: 4px solid #22c55e; min-height: 150px; }
+  .ncard.soon { border-left-color: #7c3aed; }
+  .ncard.announced { border-left-color: #f59e0b; }
+  .ncard.ga { border-left-color: #16a34a; }
+  .ncard h3 { margin: 8px 0 6px; font-size: 16px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { font-size: 11px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; background: #f8fafc; }
+  .section-h { font-size: 12px; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin: 18px 0 10px; overflow: auto; }
+  .toggle { float: right; display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .toggle button { border: 0; background: #fff; padding: 6px 12px; cursor: pointer; }
+  .toggle button.on { background: #12203a; color: #fff; }
+  @media (max-width: 1000px) { .news-grid, .wn-hero { grid-template-columns: 1fr; } }
+  a.vtitle { color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+  a.vtitle:hover { text-decoration: underline; }
+  .logo { width: 28px; height: 28px; border-radius: 6px; background: #eef2f8; }
+  .bars .barwrap { margin: 10px 0 16px; }
+  .bars .topline { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .bars .blabel { font-weight: 700; }
+  .chip-s { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #dcfce7; color: #166534; }
+  .chip-s.warn { background: #ffedd5; color: #9a3412; }
+  .track { height: 8px; background: #eef2f8; border-radius: 999px; overflow: hidden; }
+  .fill { height: 8px; border-radius: 999px; background: #22c55e; }
+  .fill.amber { background: #f59e0b; }
+  .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ncard { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; border-left: 4px solid #22c55e; }
+  .ncard.soon { border-left-color: #7c3aed; }
+  .ncard.announced { border-left-color: #f59e0b; }
+  .ncard.ga { border-left-color: #16a34a; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .pill { font-size: 11px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; background: #f8fafc; }
+  .pill.vendor { background: #ecfdf5; color: #065f46; }
+  .filters { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 12px 0; }
+  .filters input { width: calc(100% - 90px); padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+  .frow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+  .frow span { font-size: 11px; color: var(--muted); text-transform: uppercase; width: 56px; }
+  .fchip { font-size: 12px; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+  .fchip.on { background: #12203a; color: #fff; border-color: #12203a; }
+  .glance { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .glance b { color: #2563eb; font-size: 22px; }
+  .vendor-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+  .vendor-btns a { border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 8px 12px; text-decoration: none; color: #12203a; font-size: 13px; }
+  .vendor-btns a:hover { border-color: #e2b94a; background: #fff8e8; }
+  @media (max-width: 800px) { .news-grid { grid-template-columns: 1fr; } }
+  ol.clean li { margin: 7px 0; color: #243049; font-size: 13.5px; line-height: 1.45; }
+</style>
+</head>
+<body>
+<header>
+  <h1>AI Tools Comparison</h1>
+  <div class="sub">Assistants · specialist tools · cybersecurity &nbsp;|&nbsp; 8 September 2026 &nbsp;|&nbsp; One file</div>
+  <div class="tabs" id="tabs"></div>
+</header>
+<main>
+
+<section class="page active" id="overview">
+  <h2>How to buy this stack</h2>
+  <div class="callout">Default 2026 posture for a Microsoft-standardized enterprise: <b>M365 Copilot</b> as the tenant baseline, <b>Claude or ChatGPT</b> as the daily brain, <b>Perplexity</b> when the answer must be cited. Add a specialist only when volume, brand lock, or control-plane beats that trio. Cyber is a separate PO — do not treat a chatbot CISO slide as EDR.</div>
+
+  <div class="grid g3" style="margin-top:14px">
+    <a class="card tile" href="#asst-overview">
+      <div class="k">Layer 1 — daily brain</div>
+      <div class="t">Assistants</div>
+      <p>Nine general models. Start here for chat, research, code, docs, legal first-pass. Open the Assistants snapshot, KPI matrix, and vendor tabs.</p>
+    </a>
+    <a class="card tile" href="#other">
+      <div class="k">Layer 2 — specialists</div>
+      <div class="t">Writing, decks, video, meetings</div>
+      <p>Buy when the assistant drafts “good enough” but you need brand kits, avatar video, CRM notes, or self-hosted agents at scale.</p>
+    </a>
+    <a class="card tile" href="#cyber">
+      <div class="k">Layer 3 — security products</div>
+      <div class="t">Cybersecurity tools</div>
+      <p>EDR/XDR, NDR, SIEM/SOAR, agentic SOC, AppSec. These detect and contain. Assistants only summarize.</p>
+    </a>
+  </div>
+
+  <h4>If you only remember five rules</h4>
+  <div class="grid g2">
+    <div class="card">
+      <ol class="clean" style="padding-left:18px;margin:0">
+        <li>Do not stack four chatbots that do the same job. Pick one daily driver and one research tool.</li>
+        <li>Copilot’s value is the tenant, not the model. If you already pay M365 Copilot, specialists must beat Word / Teams / PPT plus Graph.</li>
+        <li>Claude wins long documents and careful code. ChatGPT wins breadth and multimodal. Gemini wins if you live in Google.</li>
+        <li>DeepSeek and Mistral are cost / residency plays, not the default knowledge worker seat.</li>
+        <li>Firefly, Synthesia, Otter, Snyk, Falcon are not “ChatGPT with a skin.” Score them on their home function.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Default stack (most enterprises)</h3>
+      <table>
+        <tr><th>Seat</th><th>Pick</th><th>Why</th></tr>
+        <tr><td>Everyone already on M365</td><td class="winner">Copilot</td><td>Meetings, mail, PPT, Graph search</td></tr>
+        <tr><td>Analysts / writers / counsel first-pass</td><td class="winner">Claude</td><td>Long context, legal prose, code review</td></tr>
+        <tr><td>Builders / multimodal / agents</td><td class="winner">ChatGPT</td><td>Breadth, images, app-building</td></tr>
+        <tr><td>Cited web research</td><td class="winner">Perplexity</td><td>Sources first; lock Comet on Ent</td></tr>
+        <tr><td>Cheap non-sensitive API</td><td class="winner">DeepSeek</td><td>Do not put regulated data here</td></tr>
+        <tr><td>EU / on-prem weights</td><td class="winner">Mistral</td><td>Residency and control plane</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h4>Job → first pick (assistants + specialists)</h4>
+  <div class="card">
+    <table>
+      <tr><th>Job</th><th>Start with the assistant</th><th>Buy a specialist when…</th><th>Specialist</th></tr>
+      <tr><td>Everyday chat / reasoning</td><td class="winner">ChatGPT or Claude</td><td>Never — this is the assistant’s job</td><td>—</td></tr>
+      <tr><td>Cited market / web research</td><td class="winner">Perplexity</td><td>You need permissions-aware internal search</td><td>Glean</td></tr>
+      <tr><td>Your own binder / deal room</td><td>Claude / Gemini</td><td>Corpus must stay grounded, no live web</td><td>NotebookLM</td></tr>
+      <tr><td>On-brand marketing copy</td><td>ChatGPT</td><td>Many writers + locked voice + campaigns</td><td>Jasper / Writer</td></tr>
+      <tr><td>Style / compliance QA</td><td>Claude (careful prose)</td><td>Org-wide enforcement in the browser</td><td>Grammarly Business / Writer</td></tr>
+      <tr><td>Board / exec deck tonight</td><td>Claude Design / Copilot PPT</td><td>You want finished web-style slides, not a draft</td><td>Gamma / Prezent</td></tr>
+      <tr><td>L&amp;D talking-head video</td><td>Do not use a chatbot</td><td>Always — avatars are a different product</td><td>Synthesia / Colossyan</td></tr>
+      <tr><td>Generative film / B-roll</td><td>Gemini Veo / ChatGPT Sora</td><td>Agency pipeline and creative ops</td><td>LTX Studio</td></tr>
+      <tr><td>Commercially safe images</td><td>ChatGPT / Gemini / Grok</td><td>Legal wants indemnity inside Creative Cloud</td><td>Adobe Firefly</td></tr>
+      <tr><td>Non-designer layouts</td><td>Copilot / Gemini</td><td>Brand kit + SSO for coordinators</td><td>Canva Enterprise</td></tr>
+      <tr><td>Meeting notes</td><td class="winner">Copilot Recap / Gemini Meet</td><td>CRM push or no-bot capture</td><td>Fireflies / Granola / Otter</td></tr>
+      <tr><td>Coding in the IDE</td><td>Claude Code / ChatGPT</td><td>Private-code VPC or power-user IDE</td><td>Tabnine / Cursor / GitHub Copilot</td></tr>
+      <tr><td>Self-hosted agents</td><td>Mistral / Claude API</td><td>You must own the runtime</td><td>n8n</td></tr>
+      <tr><td>Contracts first-pass</td><td class="winner">Claude</td><td>Never skip counsel — specialist legal AI is a later buy</td><td>—</td></tr>
+    </table>
+  </div>
+
+  <h4>Do not double-pay</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>You already own</th><th>Think twice before buying</th></tr>
+        <tr><td>M365 Copilot</td><td>Otter for Teams-only shops; Gamma for simple internal decks; a second “enterprise search” if Graph already finds the file</td></tr>
+        <tr><td>Google Workspace + Gemini</td><td>NotebookLM on consumer; Meet notetaker overlap; Slides tools that export poorly</td></tr>
+        <tr><td>ChatGPT Business / Enterprise</td><td>Another general chatbot “just in case”; image toys if GPT image is enough</td></tr>
+        <tr><td>Claude Team / Enterprise</td><td>A second long-doc tool; a coding chat that is not in the IDE</td></tr>
+        <tr><td>Defender + Sentinel</td><td>A second SIEM; four agentic-SOC startups on the same queue</td></tr>
+        <tr><td>GitHub Advanced Security / Snyk</td><td>A second AppSec platform that does not replace two others</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Cyber is a different budget</h3>
+      <p style="margin-bottom:10px">Copilot for Security and Claude/ChatGPT help analysts write and triage. They do not replace Falcon, SentinelOne, Darktrace, or Snyk.</p>
+      <table>
+        <tr><th>Need</th><th>First look</th></tr>
+        <tr><td>Endpoint</td><td class="winner">Defender, Falcon, or SentinelOne — pick one design</td></tr>
+        <tr><td>SIEM (Microsoft estate)</td><td class="winner">Sentinel + Copilot for Security</td></tr>
+        <tr><td>Network unknown-unknowns</td><td>Darktrace or Vectra on top of EDR</td></tr>
+        <tr><td>Dev / supply chain</td><td>Snyk or Checkmarx — not a chatbot code review</td></tr>
+        <tr><td>Alert pile-up</td><td>One triage agent (Dropzone or Copilot), not four</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Where to click next</h3>
+    <p class="small" style="margin-bottom:8px">Assistants tabs keep the original KPI matrix, licensing, per-vendor models, and CISO view. Specialist and Cyber tabs are the function matrices with the same 0–10 pills.</p>
+    <div class="jump">
+      <a class="jump-btn" href="#whatsnew">What's New in AI</a>
+      <a class="jump-btn" href="#asst-overview">Generalist / Assistants</a>
+      
+      
+      <a class="jump-btn" href="#ciso">CISO / assistants</a>
+      <a class="jump-btn" href="#other">Specialist tools</a>
+      <a class="jump-btn" href="#cyber">Cybersecurity tools</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="page" id="whatsnew">
+  <div class="wn-hero">
+    <div>
+      <p class="eyebrow" id="wn-eyebrow"></p>
+      <h2 id="wn-headline"></h2>
+      <p class="muted" id="wn-lede"></p>
+    </div>
+    <div class="glance" id="news-glance"></div>
+  </div>
+  <div class="filters" id="news-filters"></div>
+  <div class="section-h">Top stories this month</div>
+  <div class="news-grid" id="news-top"></div>
+  <div class="section-h">All announcements <span class="toggle"><button type="button" class="on">Cards</button><button type="button">List</button></span></div>
+  <div class="news-grid" id="news-all"></div>
+</section>
+
+<section class="page" id="asst-overview">
+  <div class="vendor-btns" id="vendor-btns"></div>
+  <h2>Generalist / Assistants</h2>
+  <p class="muted" style="margin-top:-8px">Every figure on this tab is painted from <code>data.js</code>. Replace that file to refresh.</p>
+  <div class="grid g3" id="snap-kpis"></div>
+  <div class="card" style="margin-top:14px">
+    <h3>Job → first pick (assistants + specialists)</h3>
+    <div id="jobs-table"></div>
+    <p class="small">None of these tools is a lawyer. Use them to flag clauses — then have counsel review.</p>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Capability ratings (0–10)</h3>
+    <div id="kpi-matrix"></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Licensing at a glance (private / individual)</h3>
+    <div id="lic-ind"></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Licensing at a glance (team / enterprise)</h3>
+    <div id="lic-ent"></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Flagship API list prices (USD / 1M tokens)</h3>
+    <div id="api-prices"></div>
+    <p class="small" id="api-note"></p>
+  </div>
+</section>
+
+<section class="page" id="matrix" style="display:none">
+  <h2>Capability ratings (0–10)</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>Capability</th><th>Grok</th><th>OpenAI</th><th>Copilot</th><th>Perplexity</th><th>Claude</th><th>Gemini</th><th>DeepSeek</th><th>Meta AI</th><th>Mistral</th>
+      </tr>
+      <tr><td>Chat / conversation</td><td><span class="scorepill s8">8.5</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s8">8.0</span></td></tr>
+      <tr><td>Basic research</td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s8">8.5</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s9">9.6</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+      <tr><td>Deep research</td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s8">8.7</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s9">9.1</span></td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s6">6.0</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+      <tr><td>Coding</td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s9">9.1</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s6">6.2</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s6">6.0</span></td><td><span class="scorepill s8">8.0</span></td></tr>
+      <tr><td>Building apps</td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s6">6.4</span></td><td><span class="scorepill s9">9.1</span></td><td><span class="scorepill s8">8.3</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s7">7.5</span></td></tr>
+      <tr><td>Hosting apps</td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s6">6.4</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s4">4.2</span></td><td><span class="scorepill s5">5.4</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s8">8.5</span></td></tr>
+      <tr><td>Building dashboards</td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s8">8.1</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s5">5.6</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s6">6.5</span></td></tr>
+      <tr><td>Writing documents</td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s6">6.6</span></td><td><span class="scorepill s9">9.6</span></td><td><span class="scorepill s8">8.1</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s7">7.8</span></td></tr>
+      <tr><td>Summarizing</td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.5</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s8">8.0</span></td></tr>
+      <tr><td>Contracts / legal docs*</td><td><span class="scorepill s7">7.1</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s8">8.1</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s7">7.5</span></td></tr>
+      <tr><td>Real-time / news</td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s8">8.1</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s6">6.0</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+      <tr><td>Images</td><td><span class="scorepill s8">8.5</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+      <tr><td>Video</td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s6">6.2</span></td><td><span class="scorepill s4">2.0</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+      <tr><td>Ecosystem lock-in value</td><td><span class="scorepill s6">6.2</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s6">6.4</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s8">8.5</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+      <tr><td>Privacy / no-train default</td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s9">9.0</span></td></tr>
+    </table>
+    <p class="small">Hosting apps is not a native strength of any chat product. Scores reflect adjacent cloud/platform (Azure, GCP) plus agent runtimes, not “click deploy.” Claude has no native image/video generator.</p>
+  </div>
+</section>
+
+<section class="page" id="pricing" style="display:none">
+  <h2>Licensing &amp; pricing comparison</h2>
+  <div class="card">
+    <h3>Consumer / private use</h3>
+    <table>
+      <tr><th>Plan</th><th>Grok</th><th>ChatGPT</th><th>Copilot</th><th>Perplexity</th><th>Claude</th><th>Gemini</th><th>DeepSeek</th><th>Meta AI</th><th>Mistral</th></tr>
+      <tr><td>Free</td><td>$0 capped + X</td><td>$0 (ads in some regions)</td><td>Web Copilot chat</td><td>$0, ~5 Pro/day</td><td>$0 Sonnet 5 limited</td><td>$0 generous Flash</td><td>Chat app free</td><td>Free in WA / IG / FB</td><td>Le Chat free</td></tr>
+      <tr><td>Budget</td><td>Lite $10; X Premium $8</td><td>Go $8</td><td>M365 Personal ~$10</td><td>Education Pro $10</td><td>—</td><td>AI Plus ~$5–8</td><td>API only</td><td>One Plus $7.99 test</td><td>Student ~$6</td></tr>
+      <tr><td>Standard</td><td>SuperGrok $30</td><td>Plus $20</td><td>M365 Premium ~$20</td><td>Pro $20</td><td>Pro $20</td><td>AI Pro $19.99</td><td>V4 Flash API</td><td>Core stays free</td><td>Pro $14.99</td></tr>
+      <tr><td>Power</td><td>Plus $100; Heavy $300</td><td>Pro $100 / $200</td><td>Needs M365 Copilot seat</td><td>Max $200</td><td>Max $100 / $200</td><td>Ultra $100 / $200</td><td>V4 Pro API</td><td>One Premium $19.99 test</td><td>Team $24.99</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Team / enterprise</h3>
+    <table>
+      <tr><th></th><th>Grok</th><th>OpenAI</th><th>Copilot</th><th>Perplexity</th><th>Claude</th><th>Gemini</th></tr>
+      <tr><td>Team list</td><td>Business $30/seat</td><td>Business $20–25/user; Premium seats $100–125</td><td>Copilot Business ~$18–21 + base M365</td><td>Ent. Pro $40/seat</td><td>Team $20–25 std / $100–125 premium</td><td>Workspace Business $7–22 includes Gemini</td></tr>
+      <tr><td>Enterprise</td><td>Custom: SSO, SCIM, CMEK, dedicated plane</td><td>Custom + data residency + SLA; API billed separately</td><td>$30 add-on on E3/E5; E7 $99 bundles Copilot</td><td>Ent. Max $325/seat</td><td>$20/seat + tokens at API rates</td><td>Gemini Enterprise ~$21–30+; Plus higher; PAYG option</td></tr>
+      <tr><td>Data training</td><td>Business: no train on customer data</td><td>Business/Ent: no train by default</td><td>Tenant data stays in Microsoft graph / Purview</td><td>Enterprise: never trained</td><td>No train on Team/Ent/API by default</td><td>Paid Workspace: not used to train</td></tr>
+      <tr><td>API</td><td>Pay-go tokens</td><td>Pay-go tokens (separate from ChatGPT)</td><td>Azure OpenAI + Copilot Studio credits</td><td>Sonar API + per-request fees</td><td>Pay-go tokens</td><td>Gemini API + Vertex</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Flagship API list prices (USD / 1M tokens, standard short context)</h3>
+    <table>
+      <tr><th>Model</th><th>Input</th><th>Output</th><th>Context</th><th>Why you pick it</th></tr>
+      <tr><td>Grok 4.6</td><td>$2.00</td><td>$6.00</td><td>500K (rates double ≥200K)</td><td>Frontier reasoning at mid price; live X</td></tr>
+      <tr><td>Grok 4.3</td><td>$1.25</td><td>$2.50</td><td>1M</td><td>Cheap large-context Grok</td></tr>
+      <tr><td>GPT-5.6 Sol</td><td>$4.00</td><td>$20.00</td><td>~1.05M</td><td>Flagship agents / coding (promo through Nov 2026)</td></tr>
+      <tr><td>GPT-5.6 Terra</td><td>$2.00</td><td>$12.00</td><td>~1.05M</td><td>Everyday production quality</td></tr>
+      <tr><td>GPT-5.6 Luna</td><td>$0.20</td><td>$1.20</td><td>~1.05M</td><td>High-volume cheap work</td></tr>
+      <tr><td>Claude Fable 5.1</td><td>$10.00</td><td>$50.00</td><td>1M</td><td>Hardest long-horizon agents</td></tr>
+      <tr><td>Claude Opus 5</td><td>$5.00</td><td>$25.00</td><td>1M</td><td>Premium coding / reasoning</td></tr>
+      <tr><td>Claude Sonnet 5</td><td>$2.00</td><td>$10.00</td><td>1M</td><td>Default production (intro rate)</td></tr>
+      <tr><td>Gemini 3.1 Pro</td><td>$2.00</td><td>$12.00</td><td>1–2M</td><td>Long context + multimodal</td></tr>
+      <tr><td>Gemini 3.8 Flash</td><td>$0.75</td><td>$3.75</td><td>1M</td><td>Fast workhorse (intro to Dec 2026)</td></tr>
+      <tr><td>DeepSeek V4 Flash</td><td>$0.22 off-peak</td><td>$0.66 off-peak</td><td>1M</td><td>Cheapest quality workhorse; peak 2×</td></tr>
+      <tr><td>DeepSeek V4 Pro</td><td>$0.66 off-peak</td><td>$1.98 off-peak</td><td>1M</td><td>Reasoning/coding at budget price</td></tr>
+      <tr><td>Muse Spark 1.2</td><td>$1.25</td><td>$4.25</td><td>1M</td><td>Meta hosted model API</td></tr>
+      <tr><td>Mistral Large 3</td><td>~$0.50–2.00</td><td>~$1.50–6.00</td><td>128K+</td><td>EU lab flagship; open-weight options</td></tr>
+    </table>
+    <p class="small">List prices move monthly. Batch / cache / data-residency uplifts apply. Copilot and Perplexity consumer seats are not billed this way.</p>
+  </div>
+</section>
+
+<section class="page" id="grok">
+  <h2><a class="vtitle" href="https://x.ai" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=x.ai&sz=64" alt=""> Grok</a> <span class="badge">xAI</span></h2>
+  <div class="bars" id="bars-grok"></div>
+  <div id="col-grok"></div>
+  <div id="news-grok"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Grok is the real-time, X-native assistant. It is not the writing or coding champion. It is the fastest path to what is happening on X right now, with a looser filter and strong image/video (Imagine). Grok 4.6 (12 Aug 2026) closed much of the raw-intelligence gap and is priced below GPT-5.6 Sol and Claude Fable.</p>
+      <ul class="clean">
+        <li>Wins: live events, sentiment, speed, fewer refusals, Imagine media.</li>
+        <li>Loses: enterprise maturity, legal-doc rigor, Office/Google lock-in, hosting.</li>
+        <li>Best buyer: people who already live on X, newsrooms, traders, social teams.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Free</b> on grok.com / X — capped.</li>
+        <li><b>SuperGrok Lite $10</b>, <b>SuperGrok $30</b>, <b>Plus $100</b>, <b>Heavy $300</b>.</li>
+        <li><b>X Premium $8</b> / <b>Premium+ $40</b> also include Grok inside X.</li>
+        <li><b>Business $30/seat</b>: no training on customer data, admin, Drive connector.</li>
+        <li><b>Enterprise</b>: custom SSO/SCIM/CMEK/dedicated data plane.</li>
+        <li>Aug 2026: Grok 4.6 GA; Grok Build coding agent on SuperGrok+.</li>
+        <li>Enterprise tooling still thinner than OpenAI / Microsoft / Google.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model</th><th>API price in/out</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>Grok 4.6</td><td>$2 / $6 (&lt;200K)</td><td>500K</td><td>Current flagship</td><td>Frontier reasoning, agents, coding lift vs 4.5; rates double above 200K</td><td>Good value vs Sol/Fable. Pay 4.6 only when the live-X or unfiltered edge matters</td></tr>
+      <tr><td>Grok 4.5</td><td>$2 / $6</td><td>500K</td><td>Prior flagship still live</td><td>Similar price, slightly cheaper cache</td><td>Skip unless a pin requires it — same $ as 4.6, less capability</td></tr>
+      <tr><td>Grok 4.3 / 4.20</td><td>$1.25 / $2.50</td><td>1–2M</td><td>Cheap long context</td><td>Good general + multi-agent variants</td><td>Best Grok $/token for long threads</td></tr>
+      <tr><td>Grok Build 0.1</td><td>$1 / $2</td><td>256K</td><td>Coding agent path</td><td>Repo work; not the smartest general model</td><td>Cheap coder; Claude Code still wins hard repos</td></tr>
+      <tr><td>Grok 4.1 Fast</td><td>~$0.20 / $0.50</td><td>up to 2M</td><td>Throughput</td><td>Fast non-reasoning / thinking variants</td><td>High benefit for classify/summarize loops</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Grok is useful for <b>open-source threat intel and live social signal</b> (campaign chatter, leaked IOCs on X). Business/Enterprise: no training on customer data, SSO/SCIM/CMEK on the high tier. It is <b>not</b> the SOC workbench — thinner audit, no Purview-class DLP, no FedRAMP High story comparable to Microsoft/Google.</p>
+    <ul class="clean">
+      <li>Use: OSINT, brand/threat monitoring on X, first-pass phishing-lure language review.</li>
+      <li>Do not use: regulated logs, incident war-rooms with PII, ITAR/CUI, production code with secrets.</li>
+      <li>Control: Business+ only; block consumer grok.com; treat Imagine uploads as data leaving the tenant.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="openai">
+  <h2><a class="vtitle" href="https://openai.com/chatgpt" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=openai.com&sz=64" alt=""> OpenAI</a> <span class="badge">OpenAI</span></h2>
+  <div class="bars" id="bars-openai"></div>
+  <div id="col-openai"></div>
+  <div id="news-openai"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Still the default all-rounder: chat, images, voice, GPTs, Codex, Operator-style agents, Deep Research, and the largest third-party ecosystem. GPT-5.6 (9 Jul 2026) split the family into Sol / Terra / Luna. GPT-6 Astra began rolling to enterprises on 3 Sep 2026. Not always the best writer (Claude) or the best cited search (Perplexity), but the fewest tool switches.</p>
+      <ul class="clean">
+        <li>Wins: versatility, plugins/GPTs, multimodal, agents, brand/ecosystem.</li>
+        <li>Loses: long-prose taste vs Claude; citation honesty vs Perplexity; Office-native vs Copilot.</li>
+        <li>Best buyer: mixed knowledge work, builders, teams that want one primary assistant.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Free / Go $8 / Plus $20 / Pro $100 or $200.</b></li>
+        <li><b>Business</b> $20 annual / $25 monthly per user (2+ seats). Premium seats $100–125.</li>
+        <li><b>Enterprise / Edu</b> custom. No training on business data by default.</li>
+        <li>ChatGPT subscription ≠ API. API is metered separately.</li>
+        <li>Jul 2026: GPT-5.6 Sol/Terra/Luna public.</li>
+        <li>Aug 2026: GPT-5.6-Cyber (gated).</li>
+        <li>Sep 2026: GPT-6 Astra Trusted Access rollout.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model</th><th>API price in/out</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>GPT-5.6 Sol</td><td>$4 / $20 promo</td><td>~1.05M</td><td>Flagship agents &amp; coding</td><td>Max/Ultra effort, subagents, strongest Codex path</td><td>Worth it for hard agents. Defaulting Sol everywhere wastes money</td></tr>
+      <tr><td>GPT-5.6 Terra</td><td>$2 / $12</td><td>~1.05M</td><td>Daily production default</td><td>GPT-5.5-class quality at lower cost</td><td>Best OpenAI cost/benefit for most work</td></tr>
+      <tr><td>GPT-5.6 Luna</td><td>$0.20 / $1.20</td><td>~1.05M</td><td>Volume / latency</td><td>Extraction, routing, cheap loops</td><td>Highest ROI for classify/extract/SOC triage drafts</td></tr>
+      <tr><td>GPT-5.5 / Pro variants</td><td>$5–30 / $30–180</td><td>~1M</td><td>Legacy high-compute</td><td>Still used where pinned</td><td>Poor value unless a contract pins the ID</td></tr>
+      <tr><td>GPT-6 Astra</td><td>$10 / $50 short</td><td>long-context higher</td><td>Next flagship (limited)</td><td>Enterprise Trusted Access first</td><td>Pay only for gated high-stakes work</td></tr>
+      <tr><td>GPT-5.6-Cyber</td><td>Gated / custom</td><td>varies</td><td>Security-tuned variant</td><td>Vuln reasoning, code review posture</td><td>Buy if you already standardize on OpenAI SOC workflows</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Strongest <b>general SecOps assistant</b> outside Microsoft: phishing rewrite detection, policy drafts, code review, tabletop scripts, and GPT-5.6-Cyber for vuln reasoning. Business/Enterprise/API: no training by default; residency and ZDR available on eligible contracts. Consumer ChatGPT still trains — block it.</p>
+    <ul class="clean">
+      <li>Use: IR playbook drafts, log/narrative summarization, vendor-risk questionnaires, secure-code first pass.</li>
+      <li>Do not use: raw SIEM dumps with customer PII on Plus; secret-bearing repos without DLP.</li>
+      <li>Control: Enterprise + SSO/SCIM, disable memory, ZDR on API, gateway/DLP in front of custom GPTs.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="copilot">
+  <h2><a class="vtitle" href="https://www.microsoft.com/microsoft-365/copilot" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=64" alt=""> Copilot</a> <span class="badge">Microsoft</span></h2>
+  <div class="bars" id="bars-copilot"></div>
+  <div id="col-copilot"></div>
+  <div id="news-copilot"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Copilot is not a standalone chatbot war. It is AI inside the Microsoft graph: Word, Excel, PowerPoint, Outlook, Teams, and GitHub. If your contracts, financial models, and mail already live in M365, Copilot is the highest-ROI seat even when raw model IQ trails Claude/ChatGPT. GitHub Copilot remains the default in-editor coding pair. Cowork (GA 16 Jun 2026) adds usage-priced agents on top of the seat.</p>
+      <ul class="clean">
+        <li>Wins: Excel/Power BI dashboards, Word redlines, meeting recap, tenant grounding.</li>
+        <li>Loses: standalone research UX, creative media, “best model on earth” bragging rights.</li>
+        <li>Best buyer: Microsoft shops. Weak buyer: Google-only or browser-only teams.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li>Free web Copilot chat (limited).</li>
+        <li>Consumer: Microsoft 365 Premium ~$19.99 (replaced old Copilot Pro).</li>
+        <li><b>Copilot Business</b> ~$18–21/user/yr commit + Business base license.</li>
+        <li><b>Copilot Enterprise</b> $30/user/yr commit + E3/E5. True all-in ≈ $69 (E3) / $90 (E5).</li>
+        <li><b>M365 E7</b> $99 bundles Copilot + Agent 365.</li>
+        <li>GitHub Copilot Business $19 / Enterprise $39 + AI credits since Jun 2026.</li>
+        <li>Copilot Studio / Cowork: $0.01 per credit, task-priced agents.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Surface</th><th>How you pay</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>M365 Copilot Chat</td><td>Included with eligible M365</td><td>Safe web-grounded chat</td><td>Drafting, file Q&amp;A, images</td><td>High benefit if you already pay M365 — lowest incremental risk</td></tr>
+      <tr><td>M365 Copilot (apps)</td><td>$21 or $30 add-on</td><td>Work on real tenant data</td><td>Word/Excel/PPT/Outlook/Teams + Researcher/Analyst agents</td><td>Best $ in a Microsoft shop. Weak if Graph is empty</td></tr>
+      <tr><td>Copilot Cowork</td><td>Credits on top of USL</td><td>Long-running multi-tool jobs</td><td>Light $1–3 / medium $4–7 / heavy $7+ per task</td><td>Cap credits. Agents can blow the budget</td></tr>
+      <tr><td>GitHub Copilot</td><td>$19 / $39 seat + credits</td><td>IDE coding</td><td>Completions included; chat/agent/CLI metered</td><td>Enterprise $39 pays for IP indemnity + policy — buy that for prod code</td></tr>
+      <tr><td>Models inside</td><td>Microsoft multi-model</td><td>Choice vs cost</td><td>OpenAI GPT-family + selected Claude routing</td><td>Let admin pick models; do not let users shop freely</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>The <b>default CISO platform</b> if the firm is on M365: tenant grounding, Purview DLP/sensitivity labels, eDiscovery, audit, GCC High / FedRAMP High / CMMC path, existing BAA. Security Copilot (separate SKU) sits on Sentinel. GitHub Copilot Enterprise adds code-scanning + IP indemnity.</p>
+    <ul class="clean">
+      <li>Use: policy/SOX evidence drafts, phishing mail triage in Outlook, secure coding in GitHub, IR notes in Word/Loop.</li>
+      <li>Do not use: assume web grounding is off in GCC High; consumer Copilot web is out of scope.</li>
+      <li>Control: Purview + Conditional Access + sensitivity labels on Copilot; disable web search where CUI lives.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="perplexity">
+  <h2><a class="vtitle" href="https://www.perplexity.ai" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=perplexity.ai&sz=64" alt=""> Perplexity</a> <span class="badge">Perplexity</span></h2>
+  <div class="bars" id="bars-perplexity"></div>
+  <div id="col-perplexity"></div>
+  <div id="news-perplexity"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Perplexity is the research product, not the creative OS. Every serious answer carries sources. Pro unlocks a model picker across GPT, Claude, Gemini and Grok under one $20 fee. Max and Enterprise Max add Model Council and higher Deep Research / Labs / Comet-agent limits. Weak at long creative writing, app building, and hosting.</p>
+      <ul class="clean">
+        <li>Wins: citation honesty, multi-source synthesis, fact-checking, Comet browser agents.</li>
+        <li>Loses: coding depth, document drafting quality, native media, app hosting.</li>
+        <li>Best buyer: analysts, students, journalists, anyone who must show a source.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Free</b>: limited Pro searches.</li>
+        <li><b>Pro $20</b> ($200/yr): 300+ Pro searches/day, model picker, files, image gen, $5 Sonar credits.</li>
+        <li><b>Max $200</b> ($2,000/yr): unlimited Pro, Model Council, Labs, video extras.</li>
+        <li><b>Education Pro $10</b>.</li>
+        <li><b>Enterprise Pro $40/seat</b>; <b>Enterprise Max $325/seat</b>. Never trained on ent. data.</li>
+        <li>Comet browser now free; Comet Plus publisher pack extra or bundled.</li>
+        <li>API (Sonar) billed separately from the app seat.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Access</th><th>What you pay</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>Sonar (default)</td><td>Included / cheap API</td><td>Fast cited search</td><td>Grounded answers, daily lookup</td><td>Best cheap cited lookup in the set</td></tr>
+      <tr><td>Sonar Pro</td><td>Pro seat / higher API</td><td>Deeper retrieval</td><td>More sources, better synthesis</td><td>$20 Pro is the value tier for analysts</td></tr>
+      <tr><td>Model picker (Pro+)</td><td>Inside $20/$200 seat</td><td>Borrow frontier brains</td><td>GPT / Claude / Gemini / Grok with citations</td><td>High benefit — one seat, many models</td></tr>
+      <tr><td>Model Council (Max)</td><td>$200 / Ent Max $325</td><td>Cross-check 3 frontiers</td><td>Highest-stakes research answers</td><td>Pay only for contested intel / board packs</td></tr>
+      <tr><td>Deep Research / Labs / Comet</td><td>Quota by plan</td><td>Reports + browser agents</td><td>Multi-step research, file create on Max</td><td>Watch Comet — browser agents raise data-exfil risk</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Best <b>cited threat-intel and vendor-research</b> surface: CVE writeups, actor profiles, control-framework mapping with sources. Enterprise: no training. Comet browser agent is the risk — it can touch the open web with session context.</p>
+    <ul class="clean">
+      <li>Use: threat briefing with URLs, competitor/control comparisons, policy research.</li>
+      <li>Do not use: paste internal IR tickets or customer names into Free/Pro.</li>
+      <li>Control: Enterprise only; lock Comet; DLP on file upload.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="claude">
+  <h2><a class="vtitle" href="https://claude.ai" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=anthropic.com&sz=64" alt=""> Claude</a> <span class="badge">Anthropic</span></h2>
+  <div class="bars" id="bars-claude"></div>
+  <div id="col-claude"></div>
+  <div id="news-claude"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Claude is the quality leader for writing, contract/document review, long-context analysis, and many coding-agent workflows (Claude Code). Fable 5 / 5.1 sit above Opus as the long-horizon agent tier. No native image or video generator. Privacy posture is the cleanest default among the six. Enterprise in 2026 is seat + metered tokens, not an all-you-can-eat pool.</p>
+      <ul class="clean">
+        <li>Wins: prose, legal-ish review, 1M context, coding agents, calibrated uncertainty.</li>
+        <li>Loses: pictures/video, consumer toys, Google/Microsoft file gravity.</li>
+        <li>Best buyer: lawyers/ops (with human review), writers, software teams, regulated shops.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Free</b> Sonnet 5 limited.</li>
+        <li><b>Pro $20</b>; <b>Max 5x $100</b>; <b>Max 20x $200</b>.</li>
+        <li><b>Team</b> 2–150 seats: Standard $20–25, Premium $100–125.</li>
+        <li><b>Enterprise</b> ~$20/seat + usage at API rates. SSO, SCIM, audit, retention.</li>
+        <li>No training on Team / Enterprise / API content by default.</li>
+        <li>Jun 2026: Fable 5; access briefly restricted then restored.</li>
+        <li>1 Sep 2026: Fable 5.1.</li>
+        <li>Claude Code + Cowork included on paid seats; tokens extra on Enterprise.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model</th><th>API price in/out</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>Fable 5.1</td><td>$10 / $50</td><td>1M</td><td>Hardest multi-hour agents</td><td>Adaptive thinking; coding + knowledge flagship</td><td>Expensive. Reserve for contract review agents and hard codebases</td></tr>
+      <tr><td>Opus 5 / 4.8</td><td>$5 / $25</td><td>1M</td><td>Premium daily reasoning</td><td>SWE-bench leader class; effort control</td><td>Worth it for legal/security writing; too rich for triage</td></tr>
+      <tr><td>Sonnet 5</td><td>$2 / $10 intro</td><td>1M</td><td>Default production</td><td>Best speed/IQ mix; free/Pro default</td><td>Best Claude cost/benefit for 80% of cyber writing</td></tr>
+      <tr><td>Haiku 4.5</td><td>$1 / $5</td><td>200K</td><td>Cheap volume</td><td>Classification, routing, light chat</td><td>Use for ticket classify / PII detect loops</td></tr>
+      <tr><td>Mythos 5</td><td>same as Fable</td><td>1M</td><td>Restricted Glasswing</td><td>Fable-class with fewer refusals</td><td>CISO should restrict — weaker safety classifiers</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Best <b>policy, contract, and control-narrative</b> writer. ISO 42001 + SOC 2 Type II; ZDR and BAA on Enterprise. Claude Code is a strong secure-code reviewer. DoD covered-contract use has been restricted in 2026 — confirm current status before any federal/defense scope.</p>
+    <ul class="clean">
+      <li>Use: policies, DPIAs, vendor DPAs, tabletop scripts, long log/contract review, secure code review.</li>
+      <li>Do not use: assume FedRAMP High on claude.ai consumer; Mythos in regulated tenants.</li>
+      <li>Control: Team/Enterprise only, ZDR addendum, no-train default, gateway in front of Claude Code MCP.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="gemini">
+  <h2><a class="vtitle" href="https://gemini.google.com" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64" alt=""> Gemini</a> <span class="badge">Google</span></h2>
+  <div class="bars" id="bars-gemini"></div>
+  <div id="col-gemini"></div>
+  <div id="news-gemini"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Gemini is the Google operating system: Gmail, Docs, Drive, Sheets, Meet, Search, NotebookLM, Veo video, and 1–2M context. The free tier is the most generous of the six. Consumer AI Pro is $19.99; Ultra splits into $100 (5x) and $200 (20x). Workspace already includes Gemini — you pay for the suite, not a separate chatbot. Gemini Enterprise is a distinct agent/search platform on Google Cloud.</p>
+      <ul class="clean">
+        <li>Wins: Workspace, Deep Research, video (Veo), context size, free tier, Sheets dashboards.</li>
+        <li>Loses: writing taste vs Claude; citation discipline vs Perplexity; some answer inconsistency.</li>
+        <li>Best buyer: Google-first companies, students, multimodal/video teams.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Free</b> Flash + capped Pro features.</li>
+        <li><b>AI Plus ~$5–8</b>, <b>AI Pro $19.99</b>, <b>Ultra $100 / $200</b> + huge Google One storage.</li>
+        <li>Workspace Business Starter/Standard/Plus ~$7 / $14 / $22 include Gemini.</li>
+        <li>AI Expanded Access add-on raises Workspace quotas.</li>
+        <li><b>Gemini Enterprise</b> Business ~$21; Standard from ~$30; Plus higher; PAYG edition.</li>
+        <li>Sep 2026: Gemini 3.8 Flash ($0.75/$3.75 intro through 31 Dec 2026).</li>
+        <li>Old standalone Workspace Gemini add-ons were killed; features folded into suite.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model</th><th>API price in/out</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>Gemini 3.1 / 3 Pro</td><td>$2 / $12</td><td>1–2M</td><td>Flagship reasoning</td><td>Deep Research, long docs, multimodal</td><td>Fair price for 1–2M multimodal context</td></tr>
+      <tr><td>Gemini 3.8 Flash</td><td>$0.75 / $3.75 intro</td><td>1M</td><td>New workhorse</td><td>Coding + agents at Flash speed</td><td>Best Gemini $/IQ while intro rate lasts</td></tr>
+      <tr><td>Gemini 3.6 / 3.5 Flash</td><td>~$0.30–1.50 / $2.50–7.50</td><td>1M</td><td>Everyday / free default</td><td>Fast chat, Workspace side panel</td><td>Fine for Workspace side panel, not for IR</td></tr>
+      <tr><td>Flash-Lite</td><td>~$0.25–0.30 / $1.50–2.50</td><td>1M</td><td>High volume</td><td>Classification, cheap loops</td><td>Use for bulk classify; keep PII out of free</td></tr>
+      <tr><td>Deep Think / Spark</td><td>Ultra gated</td><td>large</td><td>Hardest consumer reasoning</td><td>Ultra $100–200</td><td>Personal Ultra is not an enterprise control</td></tr>
+      <tr><td>Veo 3.1 + images</td><td>credit metered</td><td>—</td><td>Video / images</td><td>Best-in-set video</td><td>High leak risk — treat media prompts as data</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Strong if the firm is on Google: Workspace DLP, Chronicle/Security Operations, FedRAMP High and DoD IL5 on scoped Google Cloud services. Free Gemini trains — paid Workspace does not. Feature-level scoping is required; not every Gemini toy is in the accredited boundary.</p>
+    <ul class="clean">
+      <li>Use: Drive/Gmail grounded review, NotebookLM on approved corpora, Chronicle assist, long-log summarize in Pro.</li>
+      <li>Do not use: consumer gemini.google.com for CUI; Veo for incident video with faces/PII.</li>
+      <li>Control: Workspace + Gemini Enterprise, disable consumer, pin accredited APIs only.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="deepseek">
+  <h2><a class="vtitle" href="https://www.deepseek.com" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=deepseek.com&sz=64" alt=""> DeepSeek</a> <span class="badge">DeepSeek</span></h2>
+  <div class="bars" id="bars-deepseek"></div>
+  <div id="col-deepseek"></div>
+  <div id="news-deepseek"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>DeepSeek is the cost weapon: V4 Flash and V4 Pro deliver strong coding and reasoning at a fraction of Sol / Opus / Fable prices, with 1M context. The chat app is free. There is no serious Western enterprise seat. Official API is China-hosted with peak/off-peak doubling. Use it for volume engineering workloads or self-host weights — not for confidential portfolio data on the public endpoint.</p>
+      <ul class="clean">
+        <li>Wins: $/token, coding/reasoning value, 1M context, OpenAI-compatible API.</li>
+        <li>Loses: residency, admin/SSO product, cited research UX, media, Office gravity.</li>
+        <li>Best buyer: builders, internal tools with non-sensitive data, cost-sensitive agents.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Consumer chat:</b> free. No Plus/Pro seat.</li>
+        <li><b>API only</b> for paid use. No published Business SKU in the U.S.</li>
+        <li>V4 Flash off-peak <b>$0.22 / $0.66</b>; peak 2×. Cache hits ~$0.007 in.</li>
+        <li>V4 Pro off-peak <b>$0.66 / $1.98</b>; peak <b>$1.32 / $3.96</b>.</li>
+        <li>Jul 31 2026: V4-Flash GA. Aug 2026: V4-Pro.</li>
+        <li>Peak windows: weekdays 01:00–04:00 and 06:00–10:00 UTC.</li>
+        <li>Enterprise path: aggregator, own GPU, or treat as unsanctioned public cloud.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model</th><th>API price in/out (off-peak)</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>V4 Flash 0731</td><td>$0.22 / $0.66</td><td>1M</td><td>Default cheap production</td><td>Chat, tools, agents; thinking optional</td><td>Best raw $/token. Benefit collapses if data cannot leave the US/EU</td></tr>
+      <tr><td>V4 Pro 0813</td><td>$0.66 / $1.98</td><td>1M</td><td>Harder reasoning / code</td><td>Thinking default; concurrency 500</td><td>Still cheap vs Opus. Same residency veto</td></tr>
+      <tr><td>V4 Flash Vision exp</td><td>same as Flash</td><td>1M</td><td>Images in</td><td>Vision billed as input tokens</td><td>Do not send screenshots of consoles or badges</td></tr>
+      <tr><td>V3.2 / R1 family</td><td>legacy / retired aliases</td><td>64–128K</td><td>Only if already pinned</td><td>Prior generation</td><td>No reason to start new work here</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Useful only as a <b>cheap offline/self-hosted coder</b> for non-sensitive workloads. Official API is China-hosted. No SOC 2 story comparable to US labs. Treat as high EAR / data-transfer risk. Self-host open weights inside your VPC if the CISO allows the model family at all.</p>
+    <ul class="clean">
+      <li>Use: internal malware-triage prototypes on synthetic data; cost-stress tests.</li>
+      <li>Do not use: production IR, customer data, source code with secrets, anything export-controlled.</li>
+      <li>Control: default deny on corporate network; if allowed, self-host + no-exfil gateway only.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="metaai">
+  <h2><a class="vtitle" href="https://www.meta.ai" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=meta.ai&sz=64" alt=""> Meta AI</a> <span class="badge">Meta</span></h2>
+  <div class="bars" id="bars-metaai"></div>
+  <div id="col-metaai"></div>
+  <div id="news-metaai"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Meta AI is a distribution play, not an enterprise workbench. It is free inside WhatsApp, Instagram, Facebook, Messenger, glasses, and meta.ai. Quality is fine for casual chat and social creative work. It is the wrong place for contracts, portfolio data, or governed agents. Llama remains the open-weight family others host; Muse Spark is Meta’s hosted model API.</p>
+      <ul class="clean">
+        <li>Wins: zero-cost reach, social apps, images/video for consumers, Llama weights.</li>
+        <li>Loses: admin, no-train guarantees, deep research, coding agents, legal review.</li>
+        <li>Best buyer: consumer products, social teams. Not a GIP/BlackRock control plane.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Core assistant: free</b> across Meta apps.</li>
+        <li><b>Meta One Plus $7.99</b> / <b>Premium $19.99</b> — testing (SG, GT, BO) for extra compute, thinking, media.</li>
+        <li>Instagram/Facebook Plus ~$3.99 and WhatsApp Plus ~$2.99 are social perks, not AI seats.</li>
+        <li>No Meta AI Enterprise assistant SKU.</li>
+        <li>Muse Spark API ~$1.25 / $4.25; Contributor tier much cheaper.</li>
+        <li>First-party Llama API wound down mid-2026; use Together, Groq, Fireworks, etc.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model / surface</th><th>Price</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>Meta AI app / WA / IG / FB</td><td>$0 (Plus/Premium test)</td><td>product-limited</td><td>Casual reach</td><td>Chat, images, glasses, light research</td><td>Free and high leak risk. Ban for work data</td></tr>
+      <tr><td>Muse Spark 1.2</td><td>$1.25 / $4.25</td><td>1M</td><td>Meta-hosted API</td><td>General + multimodal</td><td>Mediocre $ vs Claude/OpenAI for enterprise work</td></tr>
+      <tr><td>Muse Spark Contributor</td><td>~$0.10 / $0.20</td><td>1M</td><td>Cheap hosted Llama-class</td><td>Volume</td><td>Cheap tokens; still Meta-hosted</td></tr>
+      <tr><td>Llama 4 Scout / Maverick</td><td>host-dependent</td><td>1M–10M</td><td>Self-host or third-party</td><td>Open weights</td><td>Best Meta path: run Llama in your VPC</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Almost no help as a <b>governed workbench</b>. Value is Llama weights you can self-host and scan. Consumer Meta AI sits in an ad-funded stack — treat every chat as training/advertising-adjacent. WhatsApp Business is a different product and still not a SOC console.</p>
+    <ul class="clean">
+      <li>Use: self-hosted Llama for internal classify; social-engineering awareness examples.</li>
+      <li>Do not use: incident data in WhatsApp/Instagram Meta AI.</li>
+      <li>Control: block meta.ai and in-app AI on managed devices; allow Llama only in approved VPC hosts.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="mistral">
+  <h2><a class="vtitle" href="https://mistral.ai" target="_blank" rel="noopener"><img class="logo" src="https://www.google.com/s2/favicons?domain=mistral.ai&sz=64" alt=""> Mistral</a> <span class="badge">Mistral AI</span></h2>
+  <div class="bars" id="bars-mistral"></div>
+  <div id="col-mistral"></div>
+  <div id="news-mistral"></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Main point</h3>
+      <p>Mistral is the EU sovereignty lab: Le Chat / Vibe for chat and coding, open weights, and a real on-prem / private-cloud enterprise path. Pro at $14.99 undercuts the $20 club. It is not the best writer or researcher. It is the cleanest answer when data must stay in Europe or on your metal.</p>
+      <ul class="clean">
+        <li>Wins: GDPR-native, on-prem, open weights, cheap Pro, MCP connectors, Vibe coding.</li>
+        <li>Loses: raw IQ vs Claude/ChatGPT, video, Microsoft/Google file gravity.</li>
+        <li>Best buyer: EU entities, regulated infra, teams that need self-host.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Licensing &amp; recent news</h3>
+      <ul class="clean">
+        <li><b>Free</b> Le Chat — soft cap ~20–25 messages/day, images, MCP, Memories.</li>
+        <li><b>Pro $14.99</b> (students ~$5.99–6.99). No-telemetry mode.</li>
+        <li><b>Team $24.99/user</b> (~$19.99 annual, $50 minimum).</li>
+        <li><b>Enterprise</b> quote: SAML, audit, white label, custom models, on-prem. Third parties cite ~$20k+/mo entry.</li>
+        <li>API separate. Large roughly $0.50–2 in / $1.50–6 out depending on SKU.</li>
+        <li>Vibe CLI/IDE is the coding surface. 40+ MCP connectors.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Model matrix — price vs why vs capabilities</h3>
+    <table>
+      <tr><th>Model / plan</th><th>Price</th><th>Context</th><th>Why use it</th><th>Capabilities</th><th>Cost vs benefit</th></tr>
+      <tr><td>Le Chat Free / Pro</td><td>$0 / $14.99</td><td>product</td><td>EU chat + coding</td><td>Search, images, Memories, Vibe</td><td>Cheapest Western Pro seat. Fine for drafts, not for CUI on Free</td></tr>
+      <tr><td>Le Chat Team</td><td>$24.99/user</td><td>product</td><td>Small EU teams</td><td>30GB libs, domain verify, export</td><td>Good small-team value; SSO only at Enterprise</td></tr>
+      <tr><td>Mistral Large 3</td><td>~$0.50–2 / $1.50–6</td><td>128K+</td><td>Flagship API</td><td>General + agents</td><td>Strong $ vs GPT/Claude if EU residency is the requirement</td></tr>
+      <tr><td>Medium / Small / Codestral</td><td>well under $1–2</td><td>varies</td><td>Volume / code</td><td>Fast, cheap, open-weight options</td><td>Best Mistral ROI for classify and code assist</td></tr>
+      <tr><td>Enterprise private</td><td>quote (~$20k+/mo cited)</td><td>custom</td><td>On-prem / sovereign</td><td>Custom models, agents, SSO, audit</td><td>Pay the quote when GDPR/on-prem is non-negotiable</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How it helps cyber / CISO</h3>
+    <p>Best <b>EU / on-prem control story</b>: GDPR-native, no-telemetry on Pro, Team opt-out of training, Enterprise SAML/audit/private deploy. Open weights let you run in your own SOC network. IQ trails Claude/ChatGPT on hard IR writing.</p>
+    <ul class="clean">
+      <li>Use: EU entities, air-gapped or private-cloud assistants, Codestral in approved IDE.</li>
+      <li>Do not use: Free Le Chat for incident data; assume FedRAMP High.</li>
+      <li>Control: Enterprise private or self-host; turn on no-telemetry; lock MCP connectors.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="ciso">
+  <h2>CISO / cyber offerings</h2>
+  <div class="card">
+    <h3>What a CISO should actually buy</h3>
+    <p class="muted">These vendors sell assistants, not a full security stack. Pair them with Purview / Chronicle / a prompt gateway / DLP. Scores below are fit for a security program, not model IQ. EAR = U.S. Export Administration Regulations posture for sending data or weights across borders — confirm with counsel; this is not legal advice.</p>
+    <table>
+      <tr>
+        <th>Vendor</th>
+        <th>CISO-ready offering</th>
+        <th>Train on customer data</th>
+        <th>Residency / ZDR / FedRAMP</th>
+        <th>EAR / cross-border</th>
+        <th>Best cyber use</th>
+        <th>CISO verdict</th>
+      </tr>
+      <tr>
+        <td>Grok / xAI</td>
+        <td>Business $30; Enterprise SSO/SCIM/CMEK</td>
+        <td>Business/Ent: no</td>
+        <td>Dedicated plane on Ent. No GCC High story</td>
+        <td>US lab. Consumer X app is a side channel</td>
+        <td>Live X OSINT, lure-language review</td>
+        <td>Allow listed OSINT only</td>
+      </tr>
+      <tr>
+        <td>OpenAI</td>
+        <td>ChatGPT Business/Enterprise + API ZDR + GPT-5.6-Cyber</td>
+        <td>Business/Ent/API: no by default. Free/Plus: yes</td>
+        <td>Residency on Ent/API. ZDR addendum. SOC 2 + ISO 27001 family</td>
+        <td>US lab. Watch custom GPT / agent tool egress</td>
+        <td>IR drafts, secure-code, vendor risk, Cyber variant</td>
+        <td>Approve Enterprise + gateway. Ban consumer</td>
+      </tr>
+      <tr>
+        <td>Microsoft Copilot</td>
+        <td>M365 Copilot + Security Copilot + GitHub Copilot Ent + Purview</td>
+        <td>Tenant data stays in Graph. Web search is the leak</td>
+        <td>FedRAMP High, GCC High, CMMC/ITAR path. Existing M365 BAA</td>
+        <td>US/EU boundary options. GCC High for CUI</td>
+        <td>Mail/file grounded SecOps, Sentinel assist, code indemnity</td>
+        <td>Default allow in M365 shops</td>
+      </tr>
+      <tr>
+        <td>Perplexity</td>
+        <td>Enterprise Pro $40 / Max $325; Sonar API</td>
+        <td>Enterprise: never trained</td>
+        <td>SOC 2. Residency verify. Comet agent is the risk</td>
+        <td>US product. Citations may pull foreign sources</td>
+        <td>Cited threat intel and control research</td>
+        <td>Approve Ent research. Lock Comet</td>
+      </tr>
+      <tr>
+        <td>Claude / Anthropic</td>
+        <td>Team/Enterprise + API ZDR + Claude Code + ISO 42001</td>
+        <td>Team/Ent/API: no by default</td>
+        <td>ZDR + BAA on Ent. FedRAMP paths exist; DoW covered-contract use was blocked in 2026 — reconfirm</td>
+        <td>US lab. Cleanest no-train default</td>
+        <td>Policies, DPAs, contract/code review, tabletops</td>
+        <td>Approve for writing/review. Check DoD status</td>
+      </tr>
+      <tr>
+        <td>Gemini / Google</td>
+        <td>Paid Workspace + Gemini Enterprise + Chronicle + Vertex</td>
+        <td>Paid Workspace: no. Free consumer: yes</td>
+        <td>FedRAMP High / DoD IL5 on scoped Cloud services — feature-scope it</td>
+        <td>US/EU residency. Consumer app out of bound</td>
+        <td>Workspace-grounded review, Chronicle, long-log summarize</td>
+        <td>Approve Workspace/Enterprise only</td>
+      </tr>
+      <tr>
+        <td>DeepSeek</td>
+        <td>No Western enterprise SKU. Self-host weights or deny</td>
+        <td>Assume yes on official API</td>
+        <td>No comparable SOC 2. Official API China-hosted</td>
+        <td>Highest EAR / transfer risk of this set</td>
+        <td>Synthetic-data prototypes only, preferably self-hosted</td>
+        <td>Default deny official API</td>
+      </tr>
+      <tr>
+        <td>Meta AI</td>
+        <td>No assistant Ent SKU. Llama self-host is the offering</td>
+        <td>Consumer: treat as yes / ad-adjacent</td>
+        <td>None for WhatsApp/IG assistant</td>
+        <td>US company; consumer apps are not a control plane</td>
+        <td>Self-hosted Llama classify. Not IR</td>
+        <td>Ban consumer Meta AI on work devices</td>
+      </tr>
+      <tr>
+        <td>Mistral</td>
+        <td>Team $24.99; Enterprise private / on-prem / SAML</td>
+        <td>Pro no-telemetry; Team/Ent opt-out / no-train</td>
+        <td>GDPR-native. On-prem is the control. Not FedRAMP High</td>
+        <td>EU lab. Best sovereignty story</td>
+        <td>EU/private SOC assistant, Codestral in VPC</td>
+        <td>Approve when data must stay EU/on-prem</td>
+      </tr>
+    </table>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3>CISO control baseline (all vendors)</h3>
+      <ul class="clean">
+        <li>No consumer tiers for work data. SSO/SCIM or it is a shadow tool.</li>
+        <li>Prompt/MCP gateway + DLP (Purview or equivalent) in front of every API and plugin.</li>
+        <li>Turn off training, memory, and web grounding where CUI / PII / source live.</li>
+        <li>Separate SecOps projects from general chat. Log prompts and tool calls.</li>
+        <li>Agents (Cowork, Comet, Claude Code, Grok Build) get a tighter allow-list than chat.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Cost vs benefit for security work</h3>
+      <ul class="clean">
+        <li><b>Highest benefit / $:</b> Copilot if you already own M365 + Purview. Gemini if you already own Workspace + Chronicle.</li>
+        <li><b>Highest writing quality / $:</b> Claude Sonnet 5 for policies; Opus/Fable only for hard reviews.</li>
+        <li><b>Highest general IQ / $:</b> ChatGPT Terra on Enterprise, Luna for bulk triage.</li>
+        <li><b>Highest cited intel / $:</b> Perplexity Enterprise Pro $40.</li>
+        <li><b>Highest sovereignty / $:</b> Mistral Enterprise or self-host Llama/Mistral.</li>
+        <li><b>False economy:</b> DeepSeek official API and Meta AI — cheap tokens, unacceptable custody.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:14px">None of these tools replace SIEM, EDR, IAM, or counsel. They draft, summarize, and retrieve. A human still signs the incident report and the contract.</div>
+</section>
+
+<section class="page" id="notes">
+  <h2>Method, caveats, sources</h2>
+  <div class="card">
+    <h3>How scores were built</h3>
+    <p>Scores are a 2026 synthesis of PCMag / Craze / Notebookcheck / GeoAura / vendor docs / SWE-bench style reporting — not a single lab run. They encode “fit for professional work,” not raw IQ. A 9.5 on writing means reviewers consistently preferred the prose, not that the model is legally authoritative.</p>
+    <h4>Hard caveats</h4>
+    <ul class="clean">
+      <li><b>Legal / contracts:</b> all of these will miss governing-law traps. Claude is still the best first-pass reviewer. A human lawyer still signs.</li>
+      <li><b>DeepSeek / Meta consumer:</b> do not put confidential portfolio or contract data on the public DeepSeek API or Meta AI chats.</li>
+      <li><b>Hosting apps:</b> chat products do not replace Vercel/Azure/GCP/AWS. Copilot and Gemini score higher only because the parent cloud can host what you build.</li>
+      <li><b>Pricing:</b> list prices as of early September 2026. Promo windows (GPT-5.6 Sol through 21 Nov 2026; Gemini 3.8 Flash intro through 31 Dec 2026; Copilot Business promos) expire. Enterprise quotes vary widely.</li>
+      <li><b>Models:</b> lineups change monthly. Pin model IDs in production.</li>
+    </ul>
+    <h4>Primary public sources consulted</h4>
+    <ul class="clean">
+      <li>Vendor pricing: openai.com, claude.com/pricing, x.ai / aipricing trackers, perplexity.ai/enterprise/pricing, Microsoft 365 Copilot pages, Google One / Gemini Enterprise docs, api-docs.deepseek.com, mistral.ai/pricing, Meta One test coverage.</li>
+      <li>Roundups: PCMag Best AI Chatbots (26 Aug 2026), Notebookcheck subscription comparison (Jul 2026), Craze / Pick-Right / GeoAura 2026 scoreboards.</li>
+      <li>Model drops: Grok 4.6 (12 Aug 2026), GPT-5.6 (9 Jul 2026), Claude Fable 5.1 (1 Sep 2026), Gemini 3.8 Flash (2 Sep 2026), Copilot Cowork GA (16 Jun 2026).</li>
+    </ul>
+    <div class="callout">Practical stack: Claude or ChatGPT as the daily driver + Perplexity for sourced research + Copilot or Gemini if that is your suite + Grok if X is the job. Add DeepSeek for cheap non-sensitive API volume, Mistral when data must stay in the EU or on-prem, and Meta AI only for consumer/social reach.</div>
+  </div>
+</section>
+
+<section class="page" id="other">
+  <h2>AI Tools Competitive Dashboard</h2>
+  <p class="muted" style="margin-top:-8px">Capability ratings use the same 0–10 pills as the Assistants dashboard. Specialists should beat general LLMs on their home function.</p>
+  <div class="jump">
+    <a href="#cat-write">Writing</a>
+    <a href="#cat-deck">Presentations</a>
+    <a href="#cat-video">Video</a>
+    <a href="#cat-design">Design</a>
+    <a href="#cat-meet">Meetings</a>
+    <a href="#cat-research">Research</a>
+    <a href="#cat-auto">Automation</a>
+  </div>
+
+  <h4 id="cat-write">Writing &amp; Content</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>Jasper</td><td>Enterprise marketing copy at scale with brand-voice controls</td><td>Brand voices, workspaces, SSO</td><td>Marketing orgs with a locked voice</td></tr>
+        <tr><td>Writer</td><td>Enterprise writing platform with governance / compliance guardrails</td><td>Regulated-copy posture</td><td>Banks, healthcare, controlled language</td></tr>
+        <tr><td>Grammarly Business</td><td>Writing QA, tone and style enforcement org-wide</td><td>SSO, admin analytics, style guides</td><td>Anyone already writing in browser / Office</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Brand voice</th><th>Campaign volume</th><th>Style / compliance QA</th><th>Long-form docs</th><th>Legal / policy prose</th></tr>
+        <tr><td>Jasper</td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Writer</td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.6</span></td></tr>
+        <tr><td>Grammarly Business</td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s9">9.6</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">4.5</span></td></tr>
+        <tr><td>ChatGPT</td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.2</span></td></tr>
+        <tr><td>Claude</td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>Gemini</td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s8">8.1</span></td><td><span class="scorepill s8">8.0</span></td></tr>
+        <tr><td>Copilot</td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s8">8.1</span></td></tr>
+        <tr><td>Grok</td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.1</span></td></tr>
+        <tr><td>Mistral</td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s7">7.5</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cat-deck">Presentations &amp; Business Communication</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>Gamma</td><td>Prompt-to-deck for fast internal / exec decks</td><td>Team workspaces; review data handling</td><td>Need a first deck tonight</td></tr>
+        <tr><td>Prezent AI</td><td>Enterprise presentation platform, brand-compliant at scale</td><td>Brand kits, enterprise controls</td><td>Corp comms and consulting</td></tr>
+        <tr><td>Beautiful.ai</td><td>Design-guided deck builder with templates</td><td>Team templates</td><td>Slide-heavy teams without designers</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Prompt-to-deck</th><th>Brand system at scale</th><th>Design engine</th><th>Office / tenant native</th><th>Narrative quality</th></tr>
+        <tr><td>Gamma</td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s7">7.6</span></td></tr>
+        <tr><td>Prezent AI</td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.5</span></td></tr>
+        <tr><td>Beautiful.ai</td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s5">5.2</span></td><td><span class="scorepill s6">6.0</span></td></tr>
+        <tr><td>Copilot</td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+        <tr><td>Gemini</td><td><span class="scorepill s8">8.3</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>ChatGPT</td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s6">6.2</span></td><td><span class="scorepill s5">5.4</span></td><td><span class="scorepill s8">8.6</span></td></tr>
+        <tr><td>Claude</td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s6">6.4</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>Grok</td><td><span class="scorepill s6">6.2</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s4">3.8</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+      </table>
+      <p class="small">Corrected Sept 2026: Claude Design / Claude for PowerPoint and Copilot/Gemini in-app decks are real products. 2.0 is reserved for “no product surface,” not “not Gamma.”</p>
+    </div>
+  </div>
+
+  <h4 id="cat-video">Video Creation</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>Synthesia</td><td>AI-avatar presenter videos for training / L&amp;D and internal comms</td><td>Enterprise avatars, SSO, libraries</td><td>L&amp;D, HR, multi-language training</td></tr>
+        <tr><td>HeyGen</td><td>Avatar / talking-head, marketing-leaning</td><td>Team plans; review likeness terms</td><td>Growth and content marketing</td></tr>
+        <tr><td>Colossyan</td><td>Enterprise L&amp;D-focused avatar video</td><td>LMS-shaped packaging</td><td>Learning teams with an LMS</td></tr>
+        <tr><td>LTX Studio</td><td>Higher-end marketing / creative video at scale</td><td>Creative-ops; treat prompts as IP</td><td>Brand / agency production</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Avatar presenter</th><th>L&amp;D / course flow</th><th>Marketing variants</th><th>Generative film / B-roll</th><th>Multi-language</th></tr>
+        <tr><td>Synthesia</td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>HeyGen</td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s9">9.2</span></td></tr>
+        <tr><td>Colossyan</td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.8</span></td></tr>
+        <tr><td>LTX Studio</td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>Gemini (Veo)</td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+        <tr><td>ChatGPT (Sora / video)</td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>Grok Imagine</td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Copilot</td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+        <tr><td>Claude</td><td><span class="scorepill s4">2.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">2.0</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cat-design">Design &amp; Image</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>Adobe Firefly</td><td>Commercially-cleared image gen with enterprise IP indemnification</td><td>CC entitlements; indemnity on qualifying plans</td><td>Brand and legal-sensitive creative</td></tr>
+        <tr><td>Canva Magic Studio / Enterprise</td><td>Design suite with AI features, SSO and governance</td><td>SSO, brand kits, admin, DLP options</td><td>Internal comms, marketing coordinators</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Image gen</th><th>Brand kit / layout</th><th>IP indemnity story</th><th>Designer workflow</th><th>Casual / social images</th></tr>
+        <tr><td>Adobe Firefly</td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>Canva Enterprise</td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.3</span></td></tr>
+        <tr><td>ChatGPT</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s9">9.2</span></td></tr>
+        <tr><td>Gemini</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s9">9.1</span></td></tr>
+        <tr><td>Grok Imagine</td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s9">9.3</span></td></tr>
+        <tr><td>Copilot</td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>Claude</td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s4">2.5</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cat-meet">Meeting Notetakers &amp; Transcription</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>Otter.ai</td><td>Meeting transcription and summarization</td><td>Enterprise SSO and compliance packages</td><td>Zoom / Meet-heavy orgs</td></tr>
+        <tr><td>Fireflies.ai</td><td>Meeting notes plus CRM / workflow integration</td><td>Workspace admin, integrations</td><td>Sales and CS</td></tr>
+        <tr><td>Granola</td><td>Bot-free local capture, clean private notes</td><td>Local-first; still review sync</td><td>Execs who refuse the gallery bot</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Live transcript</th><th>Meeting summary</th><th>CRM / workflow push</th><th>Bot-free capture</th><th>Tenant-native (Teams/Meet)</th></tr>
+        <tr><td>Otter.ai</td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.5</span></td></tr>
+        <tr><td>Fireflies.ai</td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>Granola</td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Copilot</td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s9">9.6</span></td></tr>
+        <tr><td>Gemini</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>ChatGPT</td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+        <tr><td>Claude</td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+        <tr><td>Grok</td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s4">3.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cat-research">Research &amp; Knowledge</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>Perplexity Enterprise</td><td>Cited research / search for competitive and market intel</td><td>No-train on Ent; lock Comet</td><td>Strategy, IR, competitive intel</td></tr>
+        <tr><td>NotebookLM</td><td>Document-grounded research over your own sources</td><td>Use paid Workspace, not consumer</td><td>Due diligence, policy packs</td></tr>
+        <tr><td>Glean</td><td>Enterprise search agent across internal apps</td><td>SSO; verify source permissions inherit</td><td>Tool-sprawl knowledge orgs</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Cited live web</th><th>Your documents only</th><th>Internal app search</th><th>Deep multi-step research</th><th>Permissions-aware</th></tr>
+        <tr><td>Perplexity</td><td><span class="scorepill s9">9.6</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>NotebookLM</td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+        <tr><td>Glean</td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.3</span></td></tr>
+        <tr><td>ChatGPT</td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s8">8.7</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>Gemini</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.1</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>Claude</td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+        <tr><td>Copilot</td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>Grok</td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+        <tr><td>DeepSeek</td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s4">3.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cat-auto">Automation &amp; Agents</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>What it is</th><th>Enterprise / governance</th><th>Best buyer</th></tr>
+        <tr><td>n8n</td><td>Low-code AI workflow / agent orchestration, self-hostable</td><td>Self-host, your SSO and audit</td><td>Regulated platform teams</td></tr>
+        <tr><td>Cursor</td><td>AI coding IDE for power users</td><td>Check code-training and repo scope</td><td>Engineering ICs shipping fast</td></tr>
+        <tr><td>Tabnine</td><td>Enterprise-private-code coding assistant</td><td>Private models / VPC story</td><td>Orgs where code cannot leave</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Workflow orchestration</th><th>Self-host / VPC</th><th>IDE pair programming</th><th>Repo agents</th><th>Private-code default</th></tr>
+        <tr><td>n8n</td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.3</span></td></tr>
+        <tr><td>Cursor</td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s6">6.5</span></td></tr>
+        <tr><td>Tabnine</td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>GitHub Copilot</td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>Claude Code</td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+        <tr><td>ChatGPT / Codex</td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s6">6.8</span></td></tr>
+        <tr><td>Grok Build</td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Gemini</td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.5</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>Mistral Vibe</td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.8</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:14px">Buy a specialist when the job is high-volume, brand-locked, or must stay in a governed workflow. Otherwise the assistant you already licensed will draft it “good enough.”</div>
+</section>
+<section class="page" id="cyber">
+  <h2>AI Cybersecurity Competitive Dashboard</h2>
+  <p class="muted" style="margin-top:-8px">Corporate / enterprise use. Capability ratings use the same 0–10 pills as the Assistants dashboard. These are security platforms with AI features — not the CISO view of chatbots.</p>
+  <div class="jump">
+    <a href="#cy-edr">EDR / XDR</a>
+    <a href="#cy-ndr">Network / TDR</a>
+    <a href="#cy-siem">SIEM / SOC</a>
+    <a href="#cy-agent">Agentic SOC</a>
+    <a href="#cy-appsec">AppSec</a>
+    <a href="#cy-id">Identity / predictive</a>
+  </div>
+
+  <h4 id="cy-edr">Endpoint Detection &amp; Response (EDR / XDR)</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>AI angle</th><th>Where it wins</th><th>Watch-out</th></tr>
+        <tr><td>CrowdStrike Falcon (+ Charlotte AI)</td><td>Telemetry plus generative alert summaries</td><td>Scale, ecosystem, analyst speed</td><td>Charlotte assists Falcon; it is not the SOC</td></tr>
+        <tr><td>SentinelOne (+ Purple AI)</td><td>Autonomous endpoint response plus SOC AI</td><td>Containment speed</td><td>Autonomy needs change-control</td></tr>
+        <tr><td>Cortex XDR (Palo Alto)</td><td>Cross-layer detection, deep analytics</td><td>Already on Palo Alto</td><td>Thin if it is an island</td></tr>
+        <tr><td>Sophos Intercept X</td><td>Ransomware-specific AI protection</td><td>Mid-market endpoint</td><td>Not the default global SOC stack</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Detect</th><th>Auto-contain</th><th>Alert summary</th><th>Ransomware focus</th><th>Cross-layer XDR</th></tr>
+        <tr><td>CrowdStrike Falcon</td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s8">8.2</span></td><td><span class="scorepill s9">9.2</span></td></tr>
+        <tr><td>SentinelOne</td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s8">8.4</span></td></tr>
+        <tr><td>Cortex XDR</td><td><span class="scorepill s9">9.1</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s9">9.4</span></td></tr>
+        <tr><td>Sophos Intercept X</td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s7">7.8</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.4</span></td></tr>
+        <tr><td>Microsoft Defender / Copilot</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.0</span></td><td><span class="scorepill s9">9.2</span></td></tr>
+        <tr><td>ChatGPT / Claude</td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">1.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">2.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.. Assistants summarize; they do not replace EDR.</p>
+    </div>
+  </div>
+
+  <h4 id="cy-ndr">Network / Threat Detection &amp; Response</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>AI angle</th><th>Where it wins</th><th>Watch-out</th></tr>
+        <tr><td>Darktrace DETECT</td><td>Self-learning anomaly detection, real-time response</td><td>Unknown-unknowns; complements EDR</td><td>Tuning load; guardrail response</td></tr>
+        <tr><td>Vectra AI</td><td>Behavioral network threat detection</td><td>Mature SOCs with rich telemetry</td><td>Not a first tool</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Anomaly detect</th><th>Behavioral attacker signal</th><th>Real-time response</th><th>Identity / lateral movement</th><th>Works without EDR</th></tr>
+        <tr><td>Darktrace DETECT</td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s8">8.8</span></td></tr>
+        <tr><td>Vectra AI</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.6</span></td></tr>
+        <tr><td>Cortex / Sentinel NDR</td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s6">6.5</span></td></tr>
+        <tr><td>ChatGPT / Claude / Grok</td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">1.5</span></td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s4">2.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cy-siem">SIEM / SOC platforms</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>AI angle</th><th>Where it wins</th><th>Watch-out</th></tr>
+        <tr><td>Microsoft Sentinel</td><td>Cloud-native SIEM, AI-assisted investigation</td><td>Microsoft-standardized estates</td><td>Ingestion cost</td></tr>
+        <tr><td>IBM QRadar</td><td>SIEM plus threat management</td><td>Incumbent / regulated IBM shops</td><td>Cloud-native modernization</td></tr>
+        <tr><td>Cortex XSOAR</td><td>SOAR playbook automation</td><td>Repeatable response</td><td>Playbook debt; not detection</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Log ingest / SIEM</th><th>Investigate</th><th>SOAR playbooks</th><th>Natural-language hunt</th><th>Microsoft graph fit</th></tr>
+        <tr><td>Microsoft Sentinel</td><td><span class="scorepill s9">9.4</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s9">9.6</span></td></tr>
+        <tr><td>IBM QRadar</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Cortex XSOAR</td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s5">5.0</span></td></tr>
+        <tr><td>Copilot for Security</td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.5</span></td></tr>
+        <tr><td>ChatGPT / Claude</td><td><span class="scorepill s4">2.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s4">2.5</span></td></tr>
+        <tr><td>Gemini / Chronicle</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cy-agent">Agentic AI SOC / alert triage</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>AI angle</th><th>Where it wins</th><th>Watch-out</th></tr>
+        <tr><td>Dropzone AI</td><td>Human-in-the-loop autonomous triage</td><td>Cuts Tier-1 without unsupervised close</td><td>Scope tools the agent may touch</td></tr>
+        <tr><td>Radiant Security</td><td>Response recommendations for mid-market</td><td>No 24/7 research desk</td><td>Validate before auto-contain</td></tr>
+        <tr><td>Intezer</td><td>AI SOC automation, code-level malware heritage</td><td>Classification specialist</td><td>Not the whole SOC</td></tr>
+        <tr><td>Prophet.ai</td><td>Predictive threat modeling</td><td>Forward-looking risk</td><td>Planning input, not tickets of record</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Alert triage</th><th>Human-in-the-loop</th><th>Response recs</th><th>Malware classify</th><th>Predictive modeling</th></tr>
+        <tr><td>Dropzone AI</td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Radiant Security</td><td><span class="scorepill s8">8.4</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Intezer</td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+        <tr><td>Prophet.ai</td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s8">8.8</span></td></tr>
+        <tr><td>Copilot for Security</td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s4">4.5</span></td></tr>
+        <tr><td>ChatGPT / Claude</td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s8">8.5</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">4.0</span></td></tr>
+        <tr><td>Grok</td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cy-appsec">Application Security / code &amp; supply chain</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>AI angle</th><th>Where it wins</th><th>Watch-out</th></tr>
+        <tr><td>Checkmarx One</td><td>Code-to-cloud AppSec with agentic AI</td><td>One pane for AppSec teams</td><td>Needs a process, not a scan trophy</td></tr>
+        <tr><td>Snyk (AI Workflows)</td><td>Dev-first AppSec, fix guidance in the PR</td><td>Developers actually use it</td><td>Tune license noise vs risk</td></tr>
+        <tr><td>Mend AI</td><td>SCA plus AI-generated code scanning</td><td>Dependencies and model-written packages</td><td>Pair with secret scanning</td></tr>
+        <tr><td>Cycode</td><td>Centralized risk across the dev toolchain</td><td>ASPM when tools have sprawled</td><td>Do not add a pane unless it replaces two</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>SAST / code</th><th>SCA / deps</th><th>PR fix guidance</th><th>AI-generated code scan</th><th>ASPM / toolchain</th></tr>
+        <tr><td>Checkmarx One</td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.0</span></td></tr>
+        <tr><td>Snyk</td><td><span class="scorepill s8">8.6</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s7">7.6</span></td></tr>
+        <tr><td>Mend AI</td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.3</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.2</span></td></tr>
+        <tr><td>Cycode</td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s5">5.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s9">9.2</span></td></tr>
+        <tr><td>GitHub Copilot / Advanced Sec</td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>Claude Code / ChatGPT</td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s4">4.5</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s4">3.5</span></td></tr>
+        <tr><td>Cursor / Tabnine</td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s5">5.0</span></td><td><span class="scorepill s4">3.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+
+  <h4 id="cy-id">Identity, insider threat &amp; predictive malware</h4>
+  <div class="grid g2">
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>AI angle</th><th>Where it wins</th><th>Watch-out</th></tr>
+        <tr><td>CylancePROTECT</td><td>Predictive, pre-execution malware prevention</td><td>Stop-before-run without cloud lookup</td><td>Do not dual-stack EDR blindly</td></tr>
+        <tr><td>Exaforce</td><td>Alert routing / prioritization to cut SIEM cost</td><td>Makes an expensive SIEM cheaper to run</td><td>Bad routing hides incidents</td></tr>
+        <tr><td>Conifers.ai</td><td>Cloud-native investigation and visibility</td><td>Multi-account cloud estates</td><td>Overlap with Defender / Chronicle</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Capability ratings (0–10)</h3>
+      <table class="mtx">
+        <tr><th>Tool</th><th>Pre-exec malware</th><th>Alert routing</th><th>Cloud investigation</th><th>Identity / insider</th><th>SIEM cost cut</th></tr>
+        <tr><td>CylancePROTECT</td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s4">3.0</span></td></tr>
+        <tr><td>Exaforce</td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s8">8.8</span></td></tr>
+        <tr><td>Conifers.ai</td><td><span class="scorepill s4">3.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s9">9.0</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>Vectra / Darktrace</td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s7">7.0</span></td><td><span class="scorepill s7">7.2</span></td><td><span class="scorepill s8">8.8</span></td><td><span class="scorepill s4">4.5</span></td></tr>
+        <tr><td>Entra + Copilot</td><td><span class="scorepill s4">3.5</span></td><td><span class="scorepill s7">7.6</span></td><td><span class="scorepill s7">7.4</span></td><td><span class="scorepill s9">9.2</span></td><td><span class="scorepill s7">7.0</span></td></tr>
+        <tr><td>ChatGPT / Claude</td><td><span class="scorepill s4">2.0</span></td><td><span class="scorepill s6">6.5</span></td><td><span class="scorepill s6">6.8</span></td><td><span class="scorepill s4">4.0</span></td><td><span class="scorepill s4">3.0</span></td></tr>
+      </table>
+      <p class="small">Rescored Sept 2026 against current product surfaces. 9–10 = category product, 7–8 = strong usable, 5–6 = workaround, ≤4 = no real product for that job.</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:14px">Default pattern for a Microsoft-standardized shop: Defender / Falcon or SentinelOne on the endpoint, Sentinel as SIEM, then one AppSec platform (Snyk or Checkmarx) and one triage agent. Do not stack four “AI SOC” startups on the same queue.</div>
+</section>
+</main>
+
+<script src="data.js"></script>
+<script>
+  const pages = [
+    ["overview","Overview"],
+    ["whatsnew","What's New in AI"],
+    ["asst-overview","Generalist / Assistants"],
+    ["ciso","CISO"],
+    ["other","Specialist tools"],
+    ["cyber","Cybersecurity"],
+    ["notes","Notes"]
+  ];
+  const tabs = document.getElementById("tabs");
+  if (!tabs) { console.error("tabs bar missing"); }
+  function show(id) {
+    if (!id || !document.getElementById(id)) return;
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.id === id));
+    document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === id));
+    if (location.hash !== "#" + id) location.hash = id;
+    if (id !== "other" && id !== "cyber") window.scrollTo({top:0, behavior:"smooth"});
+  }
+  window.show = show;
+  window.addEventListener("hashchange", () => {
+    const id = (location.hash || "#overview").slice(1);
+    if (document.getElementById(id)) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.id === id));
+      document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === id));
+    }
+  });
+  if (location.hash) {
+    const id = location.hash.slice(1);
+    if (document.getElementById(id)) {
+      document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === id));
+    }
+  }
+  pages.forEach(([id,label], i) => {
+    const b = document.createElement("button");
+    b.className = "tab" + (i===0 ? " active" : "");
+    b.dataset.id = id;
+    b.textContent = label;
+    b.onclick = () => show(id);
+    if (tabs) tabs.appendChild(b);
+  });
+
+
+  function missingData(){
+    return !window.DASH || !window.DASH.vendors;
+  }
+  function pillClass(n){
+    const x=parseFloat(n);
+    return x>=9?"s9":x>=8?"s8":x>=7?"s7":x>=6?"s6":x>=5?"s5":"s4";
+  }
+  function el(id){ return document.getElementById(id); }
+  function showMissing(node){
+    if(!node) return;
+    node.innerHTML = '<p class="callout">data.js did not load. Put <code>data.js</code> in the same folder as <code>index.html</code> on GitHub Pages and refresh.</p>';
+  }
+  function renderSnap(){
+    const box=el("snap-kpis"); if(!box) return;
+    const D=window.DASH;
+    const order=["grok","openai","copilot","perplexity","claude","gemini","deepseek","metaai","mistral"];
+    box.innerHTML = order.map(id=>{
+      const v=D.vendors[id]; if(!v) return "";
+      return `<div class="card kpi"><div class="name">${v.name}</div><div class="score" style="color:${v.color||'#12203a'}">${v.score}</div><div class="note">${v.note||""}</div></div>`;
+    }).join("");
+  }
+  function renderVendorBtns(){
+    const box=el("vendor-btns"); if(!box) return;
+    const D=window.DASH;
+    box.innerHTML = (D.vendorOrder||[]).map(id=>{
+      const v=D.vendors[id]; if(!v) return "";
+      return `<a href="#${id}" data-go="${id}">${v.name}</a>`;
+    }).join("");
+  }
+  function renderJobs(){
+    const box=el("jobs-table"); if(!box) return;
+    box.innerHTML = `<table><tr><th>Job</th><th>First pick</th><th>Runner-up</th><th>Buy a specialist when…</th><th>Specialist</th></tr>` +
+      (window.DASH.jobs||[]).map(r=>`<tr><td>${r[0]}</td><td class="winner">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("") + "</table>";
+  }
+  function renderMatrix(targetId, only){
+    const box=el(targetId); if(!box) return;
+    const D=window.DASH;
+    const order=D.capOrder||[];
+    const names={grok:"Grok",openai:"OpenAI",copilot:"Copilot",perplexity:"Perplexity",claude:"Claude",gemini:"Gemini",deepseek:"DeepSeek",metaai:"Meta AI",mistral:"Mistral"};
+    const cols = only ? [only] : order;
+    let h=`<table class="mtx"><tr><th>Capability</th>${cols.map(id=>`<th>${names[id]||id}</th>`).join("")}</tr>`;
+    (D.capabilities||[]).forEach(row=>{
+      h += `<tr><td>${row.name}</td>` + cols.map(id=>{
+        const n=row.scores[id];
+        return `<td><span class="scorepill ${pillClass(n)}">${n}</span></td>`;
+      }).join("") + "</tr>";
+    });
+    box.innerHTML = h + "</table>";
+  }
+  function renderLic(){
+    const ind=el("lic-ind");
+    if(ind) ind.innerHTML = `<table><tr><th>Tool</th><th>Free</th><th>Everyday paid</th><th>Power user</th></tr>` +
+      (window.DASH.licenseInd||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("") + "</table>";
+    const ent=el("lic-ent");
+    if(ent) ent.innerHTML = `<table><tr><th>Tool</th><th>Team / business</th><th>Enterprise</th><th>True all-in note</th><th>Data training</th></tr>` +
+      (window.DASH.licenseEnt||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("") + "</table>";
+  }
+  function renderApi(){
+    const box=el("api-prices"); if(!box) return;
+    box.innerHTML = `<table><tr><th>Model</th><th>Vendor</th><th>Input / 1M</th><th>Output / 1M</th><th>Note</th></tr>` +
+      (window.DASH.apiPrices||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>$${r[2]}</td><td>$${r[3]}</td><td>${r[4]}</td></tr>`).join("") + "</table>";
+    const n=el("api-note");
+    if(n) n.textContent = "Official-list snapshot " + (window.DASH.generated||"") + ". Long-context multipliers and Fast/Batch tiers extra.";
+  }
+  function bar(title, obj, amber){
+    const s=(obj&&obj.score)||0;
+    return `<div class="barwrap"><div class="topline"><span class="blabel">${title}</span><span class="chip-s ${amber?"warn":""}">${(obj&&obj.label)||""}</span></div>
+      <div class="track"><div class="fill ${amber?"amber":""}" style="width:${s}%"></div></div>
+      <div class="small">0&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;100</div>
+      <p class="small">${(obj&&obj.note)||""}</p></div>`;
+  }
+  function renderVendorChrome(){
+    const D=window.DASH;
+    (D.vendorOrder||[]).forEach(id=>{
+      const v=D.vendors[id]; if(!v) return;
+      const bars=el("bars-"+id);
+      if(bars) bars.innerHTML = `<div class="grid g3">
+        <div class="card">${bar("AI Maturity", v.maturity,false)}</div>
+        <div class="card">${bar("Industry Adoption", v.adoption,false)}</div>
+        <div class="card">${bar("Enterprise Pricing Tier", v.pricingTier,true)}</div></div>`;
+      renderMatrix("col-"+id, id);
+      const newsBox=el("news-"+id);
+      if(newsBox){
+        const aliases={openai:["OpenAI","ChatGPT"],copilot:["Microsoft","Copilot"],gemini:["Google","Gemini"],metaai:["Meta","Meta AI"],grok:["Grok","xAI"],claude:["Claude","Anthropic"],perplexity:["Perplexity"],deepseek:["DeepSeek"],mistral:["Mistral"]};
+        const names=aliases[id]||[v.name];
+        const items=(D.news||[]).filter(n=> names.some(a => (n.vendor||"").toLowerCase().includes(a.toLowerCase()) || a.toLowerCase().includes((n.vendor||"").toLowerCase())));
+        newsBox.innerHTML = `<h3>Recent news (last 60 days)</h3><div class="news-grid">${items.map(newsCard).join("")||"<p class='small'>No items in this window.</p>"}</div>
+          <p style="margin-top:10px"><a class="jump-btn" href="#whatsnew">All What’s New in AI →</a></p>`;
+      }
+    });
+  }
+  function impactClass(i){ return i==="soon"?"soon":i==="announced"?"announced":i==="ga"?"ga":""; }
+  function impactLabel(i){
+    const hit=(window.DASH.newsImpacts||[]).find(x=>x[0]===i);
+    return hit?hit[1]:i;
+  }
+  function newsCard(n){
+    const d={ga:"ga",now:"now",announced:"ann",soon:"soon"}[n.impact]||"now";
+    return `<article class="ncard ${impactClass(n.impact)}" data-type="${n.type}" data-impact="${n.impact}" data-vendor="${n.vendor}">
+      <div class="pills"><span class="pill">${n.vendor}</span><span class="pill">${n.type}</span><span class="pill"><i class="dot ${d}"></i>${impactLabel(n.impact)}</span></div>
+      <h3>${n.title}</h3>
+      <p class="small">${n.summary}</p>
+      <div class="small">${n.date}</div>
+    </article>`;
+  }
+  let newsState={q:"",type:"",impact:"",vendor:""};
+  function filteredNews(){
+    const q=(newsState.q||"").toLowerCase();
+    return (window.DASH.news||[]).filter(n=>{
+      if(newsState.type && n.type!==newsState.type) return false;
+      if(newsState.impact && n.impact!==newsState.impact) return false;
+      if(newsState.vendor && n.vendor!==newsState.vendor) return false;
+      if(q && !(n.title+" "+n.summary+" "+n.vendor).toLowerCase().includes(q)) return false;
+      return true;
+    }).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  }
+  function renderNewsPage(){
+    const D=window.DASH; const all=D.news||[];
+    const wn=D.whatsNew||{};
+    const e=el("wn-eyebrow"); if(e) e.textContent=wn.eyebrow||"";
+    const h=el("wn-headline"); if(h) h.textContent=wn.headline||"";
+    const l=el("wn-lede"); if(l) l.textContent=wn.lede||"";
+    const glance=el("news-glance");
+    if(glance) glance.innerHTML = `<div class="gcap">At a glance</div>
+      <div class="gstat"><b>${all.length}</b> announcements tracked</div>
+      <div class="gstat"><b>${all.filter(n=>n.impact==="now"||n.impact==="ga").length}</b> available now</div>
+      <div class="gstat"><b>${all.filter(n=>n.impact==="announced").length}</b> announced / in preview</div>
+      <div class="gstat"><b>${all.filter(n=>n.impact==="soon").length}</b> coming soon</div>
+      <div class="gstat"><b>${all.filter(n=>n.type==="Model release").length}</b> new model releases</div>`;
+    const box=el("news-filters");
+    if(box){
+      box.innerHTML = `<div class="filter-search"><input id="news-q" placeholder="Search headlines and descriptions..." value="${newsState.q||""}"><button type="button" id="news-clear">Clear</button></div>
+        <div class="frow"><span class="flab">Type</span>${(D.newsTypes||[]).map(x=>`<button type="button" class="fchip ${newsState.type===x?"on":""}" data-nf="type" data-v="${x}">${x}</button>`).join("")}</div>
+        <div class="frow"><span class="flab">Impact</span>${(D.newsImpacts||[]).map(([k,lab])=>`<button type="button" class="fchip ${newsState.impact===k?"on":""}" data-nf="impact" data-v="${k}"><i class="dot ${k==="announced"?"ann":k}"></i>${lab}</button>`).join("")}</div>
+        <div class="frow"><span class="flab">Vendor</span>${(D.newsVendors||[]).map(x=>`<button type="button" class="fchip ${newsState.vendor===x?"on":""}" data-nf="vendor" data-v="${x}">${x}</button>`).join("")}</div>
+        <p class="small" id="news-count">${filteredNews().length} announcements</p>`;
+      const q=el("news-q"); if(q) q.oninput=ev=>{ newsState.q=ev.target.value; renderNewsPage(); };
+      const c=el("news-clear"); if(c) c.onclick=()=>{ newsState={q:"",type:"",impact:"",vendor:""}; renderNewsPage(); };
+      box.querySelectorAll("[data-nf]").forEach(b=>b.onclick=()=>{
+        const k=b.getAttribute("data-nf"); const v=b.getAttribute("data-v");
+        newsState[k]=newsState[k]===v?"":v; renderNewsPage();
+      });
+    }
+    const list=filteredNews();
+    const featured=new Set((wn.featured||[]));
+    const top=list.filter(n=>featured.has(n.title)).concat(list.filter(n=>!featured.has(n.title))).slice(0,6);
+    const t=el("news-top"); if(t) t.innerHTML=top.map(newsCard).join("");
+    const a=el("news-all"); if(a) a.innerHTML=list.map(newsCard).join("");
+  }
+  function bootDash(){
+    if(missingData()){
+      ["snap-kpis","jobs-table","kpi-matrix","lic-ind","lic-ent","api-prices","news-all","vendor-btns"].forEach(id=>showMissing(el(id)));
+      return;
+    }
+    renderVendorBtns();
+    renderSnap();
+    renderJobs();
+    renderMatrix("kpi-matrix", null);
+    renderLic();
+    renderApi();
+    renderVendorChrome();
+    renderNewsPage();
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", bootDash);
+  else bootDash();
+
+
+  document.addEventListener("click", e => {
+    const el = e.target.closest("[data-go]");
+    if (!el) return;
+    e.preventDefault();
+    const id = el.getAttribute("data-go");
+    if (id && document.getElementById(id)) show(id);
+  });
+</script>
+</body>
+</html>
